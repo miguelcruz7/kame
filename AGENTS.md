@@ -13,8 +13,8 @@ Si durante una tarea se detecta un problema fuera de su alcance, registrarlo com
 | Encargo | Qué hacer | Entrega esperada |
 | --- | --- | --- |
 | Pregunta o análisis | Consultar la documentación y el código pertinentes; responder con hechos y límites. | Explicación o informe. La consulta por sí sola no requiere editar archivos, crear rama ni ejecutar pruebas. |
-| Cambio documental | Editar los documentos afectados y comprobar coherencia, enlaces y referencias. | PR con el cambio y sus comprobaciones. |
-| Cambio de código | Leer la guía del componente, implementar y verificar el comportamiento; actualizar su guía si cambia el uso. | PR con resultado, comprobaciones y límites. |
+| Cambio documental | Editar los documentos afectados y comprobar coherencia, enlaces y referencias. | Cambio y comprobaciones registrados; PR cuando deba revisarse, compartirse o integrarse en `main`. |
+| Cambio de código | Leer la guía del componente, implementar y verificar el comportamiento; actualizar su guía si cambia el uso. | Cambio, comprobaciones y límites registrados; PR cuando deba revisarse, compartirse o integrarse en `main`. |
 | Inspección del vehículo | Leer hardware, preparación y guía del subsistema; obtener lecturas actuales de solo lectura. | Síntesis en estado y evidencia detallada en historial cuando corresponda. |
 | Intervención en el vehículo | Confirmar autorización y seguridad, guardar configuración, aplicar lo autorizado y verificar el resultado. | Registro de valores anterior/nuevo, evidencia, estado final y reversión. |
 
@@ -22,13 +22,15 @@ Si una inspección o intervención genera cambios en archivos versionados, aplic
 
 ## Flujo de trabajo
 
-Para cambios versionados: tarea → rama → cambio → comprobaciones → revisión → PR → integración cuando proceda → resultado registrado.
+Los cambios pueden desarrollarse y comprobarse localmente. Usar una rama cuando el trabajo vaya a conservarse, pueda interferir con otro trabajo o haya varios agentes trabajando en paralelo. Crear una PR cuando exista una unidad coherente que deba revisarse, compartirse o integrarse en `main`; no hace falta una PR por cada iteración intermedia.
+
+Para cambios versionados: tarea → cambio → comprobaciones → revisión de las diferencias → resultado registrado; añadir rama, PR e integración cuando corresponda.
 
 1. Definir objetivo, alcance y criterios de aceptación en el encargo, issue o PR; enlazar la tarea existente cuando la haya.
-2. Comprobar rama y cambios locales antes de editar. Crear una rama adecuada a la tarea y conservar el trabajo ajeno.
+2. Comprobar rama y cambios locales antes de editar. Usar una rama cuando el trabajo vaya a conservarse, pueda interferir con otro trabajo o haya varios agentes trabajando en paralelo; conservar el trabajo ajeno.
 3. Mantener código, configuración y README juntos; evitar duplicaciones y carpetas para funciones aún no implementadas. Separar cambios de organización y funcionales; un traslado local no cambia las rutas instaladas en el vehículo.
-4. Ejecutar las comprobaciones siguientes y revisar las diferencias antes de crear el commit, subir la rama y abrir la PR.
-5. Entregar rama/PR o commit, resultado, comprobaciones y pendientes. Distinguir lo preparado en el repositorio, lo instalado y lo verificado en ejecución. Tras integrar, sincronizar `main` local sin descartar trabajo ajeno.
+4. Ejecutar las comprobaciones siguientes y revisar las diferencias. Registrar el resultado; crear PR cuando exista una unidad coherente que deba revisarse, compartirse o integrarse en `main`.
+5. Entregar qué se cambió, qué se comprobó y qué queda pendiente; indicar rama, PR o commit cuando existan. Distinguir lo preparado en el repositorio, lo instalado y lo verificado en ejecución. Tras integrar, sincronizar `main` local sin descartar trabajo ajeno.
 
 ## Comprobaciones y cierre
 
