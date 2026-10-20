@@ -6,6 +6,8 @@ Este documento contiene reglas estables. Tras leerlas, abrir el [README principa
 
 Trabajar sobre el encargo del usuario. El estado y el plan aportan contexto; consultar sus pendientes no autoriza a ejecutarlos todos. Leer las guías y antecedentes que requiera la tarea.
 
+Si durante una tarea se detecta un problema fuera de su alcance, registrarlo como pendiente cuando sea relevante, pero no resolverlo salvo que sea necesario para completar el encargo actual. Una vez completado el encargo, detenerse y no iniciar automáticamente otros pendientes.
+
 ## Actuación según el encargo
 
 | Encargo | Qué hacer | Entrega esperada |
