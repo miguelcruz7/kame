@@ -47,6 +47,8 @@ Para documentación y software local dentro del encargo autorizado, el agente pu
 
 ## Límites de actuación
 
+**Selección de interfaz.** Para cada tarea, usar la interfaz de mayor nivel que sea suficiente y verificable. Preferir BlueOS/MAVLink para configuración y estado del vehículo, y SSH para sistema operativo, servicios, archivos, procesos y red. No modificar por una vía de bajo nivel algo gestionado por otra interfaz salvo que exista una razón técnica clara. La interfaz usada para diagnóstico no sustituye la evidencia exigida por el criterio de aceptación.
+
 Empezar las inspecciones con consultas de solo lectura y seguir los procedimientos del subsistema. Verificar que la interfaz utilizada corresponde a la versión instalada y que cada lectura es fresca.
 
 No cambiar parámetros, firmware o asignaciones de puerto, ni reiniciar, armar o accionar motores sin autorización explícita y comprobación de seguridad. Mantener el barco desarmado mientras existan avisos de brújula o no se haya validado el GPS. Una autorización histórica no acredita las condiciones físicas de una nueva sesión.
