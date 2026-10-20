@@ -6,10 +6,12 @@ La fase activa, las comprobaciones comunicadas y el siguiente trabajo se consult
 
 ## Por dónde empezar
 
-1. Leer [AGENTS.md](AGENTS.md) para trabajar con el proyecto.
+1. Leer [AGENTS.md](AGENTS.md) si todavía no se ha leído. Si se llega desde allí, continuar en el paso 2.
 2. Consultar [estado y siguiente trabajo](docs/estado.md).
-3. Revisar [las cinco fases](docs/plan.md) y [la preparación del barco](docs/preparacion.md).
+3. Revisar en el [plan de cinco fases](docs/plan.md) los objetivos y criterios relacionados con la tarea.
 4. Abrir el README del componente afectado.
+
+Para intervenir en el vehículo, consultar además [hardware](docs/hardware.md) y [preparación](docs/preparacion.md). Ampliar la lectura al historial cuando la tarea requiera antecedentes.
 
 ```text
 kame/
