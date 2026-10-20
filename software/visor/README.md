@@ -16,4 +16,4 @@ El servidor solo escucha en `127.0.0.1` y hace solicitudes HTTP GET a MAVLink2RE
 
 ## Comprobación local y límites
 
-Desde la raíz, `python .github/checks/check_repository.py` arranca el visor con telemetría simulada y verifica su página/API sin consultar BlueOS. En uso normal el servidor sí consulta el vehículo. El indicador conectado depende de la frescura de `ATTITUDE`; GPS y armado no tienen todavía comprobación independiente de antigüedad. Esta limitación sigue pendiente y no se considera corregida por la migración.
+Desde la raíz, `python .github/checks/check_repository.py` arranca el visor con telemetría simulada y verifica su página, API, eventos SSE, cambio de origen y cierre con una conexión SSE abierta, sin consultar BlueOS. Ctrl+C o SIGTERM detienen las consultas y cierran las conexiones HTTP/SSE del servidor. En uso normal el servidor sí consulta el vehículo. El indicador conectado depende de la frescura de `ATTITUDE`; GPS y armado no tienen todavía comprobación independiente de antigüedad. Esta limitación sigue pendiente y no se considera corregida por la migración.

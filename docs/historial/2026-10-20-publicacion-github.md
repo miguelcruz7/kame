@@ -1,6 +1,6 @@
 # Publicación en GitHub — 2026-10-20
 
-El usuario autorizó subir Kame a GitHub para facilitar su análisis desde ChatGPT. Se publica como repositorio público [miguelcruz7/kame](https://github.com/miguelcruz7/kame), con rama principal `main`. Esta tarea afecta al repositorio y su documentación; no incluye inspección ni cambios en el vehículo.
+El usuario autorizó subir Kame a GitHub para facilitar su análisis desde ChatGPT. Se publica como repositorio público [miguelcruz7/kame](https://github.com/miguelcruz7/kame), con rama principal `main`. Esta tarea afecta al repositorio, su documentación y la corrección del cierre del visor local detectada por CI; no incluye inspección ni cambios en el vehículo.
 
 ## Contenido y preservación
 
@@ -28,3 +28,9 @@ El workflow de [GitHub Actions](https://github.com/miguelcruz7/kame/actions/work
 También se verificó sin autenticación que el repositorio es público, que `main` es la rama predeterminada y que README, AGENTS, plan y estado responden HTTP 200 con el contenido publicado. Un clon público nuevo, sin credenciales ni carpeta `local/`, pasó las comprobaciones portátiles completas.
 
 La revisión final de los siete commits enviados inicialmente cubrió 93 blobs: sin archivos privados ni pesados, sin coincidencias con las dos credenciales conocidas y sin los tres identificadores privados de red. La copia de trabajo quedó sincronizada con `origin/main`. Estos resultados no sustituyen los ensayos pendientes del vehículo.
+
+## Incidencia de cierre detectada por CI
+
+La [ejecución de la primera PR](https://github.com/miguelcruz7/kame/actions/runs/39413115754) detectó un cierre forzado del visor, aunque las comprobaciones de página/API/SSE habían pasado. El servidor esperaba al cierre de conexiones HTTP activas al recibir SIGTERM; una conexión SSE podía mantenerlo abierto.
+
+Se reforzó la comprobación para conservar SSE abierto durante la terminación y se reprodujo el fallo en Ubuntu 22.04 de WSL con Node.js 22.22.1. El visor ahora detiene nuevas consultas y cierra las conexiones HTTP/SSE al terminar. La misma prueba pasó tres veces consecutivas en WSL tras la corrección; las comprobaciones portátiles completas también pasaron en Windows. La corrección y el resultado se entregan en la [PR 1](https://github.com/miguelcruz7/kame/pull/1).
