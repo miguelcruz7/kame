@@ -2,7 +2,7 @@
 
 ## Orden de lectura
 
-Leer el [estado y siguiente trabajo](docs/estado.md), el [plan](docs/plan.md) y el README del componente afectado. Para intervenir en el vehículo, consultar también [hardware](docs/hardware.md) y [preparación](docs/preparacion.md).
+Tras leer estas normas, abrir el [README principal](README.md) para conocer el proyecto y su estructura antes de consultar estado, plan o guías. Seguir el recorrido de [Por dónde empezar](README.md#por-dónde-empezar), sin repetir las lecturas ya completadas.
 
 Este documento contiene reglas estables. Los avances, fases activas, lecturas e incidencias pertenecen a sus documentos de referencia.
 
