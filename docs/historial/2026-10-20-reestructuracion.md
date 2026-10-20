@@ -16,7 +16,21 @@ Se actualizaron enlaces y rutas relativas; el generador admite `--output-dir`. S
 
 ## Verificaciones
 
-En curso durante la migración. Esta sección se completará con los resultados obtenidos antes de cerrar la entrega.
+| Comprobación | Resultado |
+| --- | --- |
+| Preservación | Los 116 originales tienen destino y respaldo cuyo SHA-256 coincide. 102 archivos siguen idénticos en su destino; 14 documentos/scripts se editaron y conservan el original verificado en el respaldo. |
+| ACL privada | Se verificaron 254 rutas del respaldo y recursos locales: acceso del usuario actual y SYSTEM. |
+| Comprobaciones portátiles | Python 3.12.10 y Node.js 24.15.0 en Windows: 52 archivos, sintaxis Python/JavaScript, scripts HTML, configuración JSON, 101 enlaces/anclas Markdown y patrones de secretos, correctos. |
+| Misiones | Los dos borradores regenerados en un destino temporal desde otro directorio coinciden con los originales, normalizando finales de línea al leer. |
+| Visor | Página, API, eventos SSE y cambio Wi-Fi/Ethernet correctos usando un preload que reemplaza todas las consultas fetch del visor por datos simulados. No se consultó BlueOS. |
+| SITL | Ubuntu 22.04 de WSL, x86_64: arranque con los defaults existentes y heartbeat de contador 3 a 6, desarmado. SIGTERM al lanzador cerró sus procesos y liberó HTTP 8088/UDP 14550. |
+| YAML | Workflow, formulario de tarea y configuración MediaMTX analizados localmente con PyYAML. El workflow todavía no se ha ejecutado en GitHub. |
+| Clon limpio | Se clonó Git en `local/verificacion/checkout/`, sin credenciales, binarios ni modelos. Las comprobaciones portátiles completas también pasaron allí. |
+| Git | Base saneada `586435a`; migración `59b7323`; comprobaciones y plantillas `698a005`. La entrega se integra en `main` mediante avance rápido; no se configura remoto. |
+
+El ensayo SITL detectó que este binario MAVLink2REST representa bitflags mediante nombres; el comprobador acepta tanto nombres como valores numéricos. También distingue los sockets TIME_WAIT de un puerto ocupado por un listener. Estas adaptaciones corresponden al comprobador local, no a cambios del vehículo ni del visor.
+
+Para repetir desde la raíz: `python .github/checks/check_repository.py`; en Linux/WSL con recursos locales: `python3 .github/checks/check_sitl.py`. El registro del ensayo correcto está en `local/registros/sitl/check-20261020-103045-903997Z.log`. La revisión de secretos cubre patrones y, cuando existe el archivo privado, sus valores conocidos; sigue siendo necesaria la revisión del contenido antes de publicar.
 
 ## Recuperación y límites
 
