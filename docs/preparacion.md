@@ -1,51 +1,62 @@
-# Preparación del barco — fase 1
+# Preparación y ensayos del barco
 
-Consultar antes [AGENTS.md](../AGENTS.md), [estado observado](estado.md) y [hardware](hardware.md). Los parámetros y versiones históricos son referencias; comprobar la instalación presente antes de aplicar un procedimiento.
+Guía de procedimientos para la puesta en servicio y las sesiones de prueba. Consultar [AGENTS.md](../AGENTS.md), el [estado vigente](estado.md) y el [inventario de hardware](hardware.md). Los procedimientos no marcan por sí solos una tarea como completada.
 
 ## 1. Inventario y respaldo
 
-Identificar placa, Raspberry, alimentación, GPS, cámara, módem, ESC y motor por lado. Confirmar cableado, masas, pines y compatibilidad de alimentación. Registrar modelo, fuente y lo pendiente de comprobar.
+Identificar placa, ordenador de a bordo, alimentación, sensores, comunicaciones, ESC y motor por lado. Confirmar cableado, masas, pines y compatibilidad de alimentación. Registrar modelo, fuente y lo que no se pudo comprobar.
 
-Guardar parámetros, configuración de BlueOS, asignaciones de puertos y versiones antes de modificar. Los [snapshots existentes](historial/parametros/README.md) son lecturas históricas, no una configuración aprobada para restaurar a ciegas. Conservar ubicación, hash y alcance de recuperación de cada respaldo.
+Guardar parámetros, configuración de BlueOS, asignaciones de puertos y versiones antes de modificar. Los [snapshots existentes](historial/parametros/README.md) son lecturas históricas, no una configuración aprobada para restaurar automáticamente. Conservar ubicación, hash y alcance de recuperación de cada respaldo.
 
 ## 2. BlueOS y firmware
 
-La última instalación documentada era BlueOS 1.4.3 y ArduRover 4.6.3 en Navigator64. Releer versiones y selección de placa. Para instalar o actualizar, contrastar documentación oficial de la versión y hardware, confirmar compatibilidad, guardar configuración y acordar recuperación.
+Leer versiones y selección de placa y contrastarlas con hardware y documentación oficial aplicable. Para instalar o actualizar, confirmar compatibilidad, guardar configuración y acordar recuperación.
 
 Firmware, placa/puerto y reinicios requieren autorización y condiciones de seguridad verificadas. Registrar origen, versión, plataforma y hash del archivo. Leer después el estado: una interfaz web disponible no demuestra heartbeat fresco de ArduPilot.
 
-## 3. Telemetría y enlaces
+## 3. Inspección y enlaces
 
-Elegir un enlace de la [tabla de redes](hardware.md#red-y-puertos). Confirmar heartbeat que avanza y armado actual; después GPS, avisos prearm y sensores. Guardar fecha, enlace y fuente. No interpretar la caché de MAVLink2REST como telemetría presente.
+Elegir un enlace de la [tabla de redes](hardware.md#red-y-puertos). Empezar con consultas de solo lectura y registrar fecha, enlace, fuente y límites:
 
-Si desaparece ArduPilot, recoger procesos y registros antes de atribuir causa. El [registro GPS](historial/2026-10-19-gps.md) diferencia caída del autopiloto, recuperación y tasas del receptor frente a MAVLink. Evitar lectores competidores en el puerto GPS que usa ArduPilot.
+1. Confirmar heartbeat que avanza y estado de armado actual. Poder armar no significa estar armado ni valida la respuesta de los motores.
+2. Leer GPS_RAW_INT: fix, satélites y coordenadas; contrastar la posición con el lugar físico.
+3. Revisar avisos prearm/brújula y la respuesta de actitud/rumbo.
+4. Comprobar cámara y vídeo según el enlace y el procedimiento de Cockpit.
+
+Priorizar API documentada de la versión instalada de BlueOS, MAVLink/MAVLink2REST o SSH. Usar la interfaz cuando aporte evidencia visual o una función sin API fiable. Comprobar frescura de cada dato; HTTP 200 no acredita telemetría ni la caché acredita estado presente.
+
+Si desaparece ArduPilot, recoger procesos y registros antes de atribuir causa. Evitar lectores competidores en el puerto GPS que usa ArduPilot y verificar la identidad del dispositivo antes de abrir un puerto. El [registro GPS](historial/2026-10-19-gps.md) conserva el análisis anterior.
 
 ## 4. Montaje y calibración
 
-Confirmar proa, ejes y montaje. La corrección documentada del Navigator es `Custom 1`, pitch −13°, con buen acuerdo estático; falta validar una calibración completa con esa orientación. Consultar la [secuencia y fuentes de orientación](historial/2026-10-19-orientacion-navigator.md).
+Consultar el montaje documentado en [hardware](hardware.md#navigator-montaje-y-calibración). Expresar la orientación de montaje antes de realizar una calibración. Si cambia el montaje o se necesita recalibrar, seguir el procedimiento oficial correspondiente y registrar el resultado.
 
-Según la [actualización del usuario recibida el 2026-10-20](historial/2026-10-20-brujula-mmc5983.md), la MMC5983 se desconectó por incompatibilidad con la Raspberry Pi 5 en esta instalación y quedó únicamente la AK09915. Confirmar mediante lecturas que ArduPilot utiliza esa única brújula; no restaurar automáticamente la selección doble de los snapshots anteriores.
+Con motores aislados y vehículo desarmado, comprobar actitud, respuesta al movimiento, rumbo e interferencias de alimentación/propulsión. Utilizar la brújula indicada por el inventario vigente; no restaurar la selección de sensores de snapshots anteriores sin revisar el montaje.
 
-Con motores aislados y vehículo desarmado, seguir el procedimiento oficial de acelerómetros y comprobar la respuesta al movimiento. Verificar calibración y rumbo de la AK09915 e interferencias de alimentación/propulsión. El prearm saludable posterior a un aviso no certifica las calibraciones ni permite deducir que la desconexión resolviera el aviso anterior.
-
-Validar fix, satélites y posición GPS frente al lugar físico en cada sesión de navegación. La configuración más reciente documentada usa u-blox; NMEA fue el ajuste anterior del 16 de octubre. DGPS no demuestra RTK fijo; no hay una cadena RTCM/NTRIP validada en estos registros.
+El prearm saludable y la ausencia de errores son observaciones distintas de un registro de calibración. Consultar en [estado](estado.md) qué se ha confirmado ya y no reabrir una calibración completada únicamente porque siga apareciendo como pendiente en una entrada histórica. Las [fuentes de orientación](historial/2026-10-19-orientacion-navigator.md) conservan la secuencia anterior.
 
 ## 5. Propulsión y control manual
 
-Identificar modelo y conexión real de cada ESC/motor. Confirmar alimentación de potencia, indicaciones del ESC, señal y masa. Verificar dónde termina cualquier BEC y su compatibilidad; el [registro de motores](historial/2026-10-19-motores-esc.md) conserva detalles y fuentes del montaje comunicado.
+Preparar la tarea de ensayo indicando los equipos por lado, su conexión real, alimentación de potencia, señal, masa e indicaciones del ESC. Verificar destino y compatibilidad de cualquier BEC. El [registro de motores](historial/2026-10-19-motores-esc.md) conserva detalles y fuentes del montaje comunicado.
 
-PWM en telemetría confirma lo ordenado, no la señal eléctrica ni el giro. Las pruebas requieren autorización, supervisión junto al barco, disposición segura de hélices y corte accesible. Respetar los límites del fabricante y no prolongar pruebas en seco.
+Un PWM reportado confirma lo ordenado, no la señal eléctrica ni el giro. Las pruebas requieren autorización explícita, supervisión junto al barco, disposición segura de hélices y corte accesible. Respetar los límites del fabricante y no prolongar pruebas en seco.
 
-Comprobar cada lado, sentido, neutral y respuesta mediante el procedimiento acordado; después mando manual, parada y recuperación. Registrar observación física y estado final. El armado transitorio de origen desconocido y las pruebas sin giro siguen abiertos en [estado.md](estado.md).
+Comprobar cada lado, sentido, neutral y respuesta mediante el procedimiento acordado; después mando manual, parada y recuperación. Registrar observación física y estado final. La capacidad de armar no sustituye esta comprobación.
 
 ## 6. Vídeo y acceso remoto
 
-Leer [vídeo](../software/video/README.md) y [conectividad](../software/conectividad/README.md) antes de intervenir. Confirmar imagen actual y fluida dentro de Cockpit por el enlace de uso; procesos, RTSP y señalización son comprobaciones distintas.
+Preparar los ensayos como tareas independientes y realizarlos con el barco desarmado. Cada encendido físico debe estar supervisado. El orden de trabajo y su resultado se mantienen en [estado](estado.md).
 
-Si se va a usar 4G, comprobar módem presente, SIM lista, interfaz y ruta móvil, ZeroTier online y recuperación después de un arranque en frío autorizado. El temporizador desbloquea la SIM cuando aparece el puerto; no acredita conectividad.
+1. [Vídeo por Wi-Fi KAME](../software/video/README.md#ensayo-por-wi-fi-kame): 60 s en Cockpit con movimientos conocidos de la escena.
+2. [Arranque automático por 4G](../software/conectividad/README.md#ensayo-de-arranque-4g): dos encendidos consecutivos, módem conectado y sin salida a Internet alternativa en la Pi; máximo inicial de 5 min por intento.
+3. [Vídeo por 4G](../software/video/README.md#ensayo-por-4g): repetir la comprobación visual una vez confirmada la ruta móvil.
+
+Registrar tiempos, pausas, errores y retraso observado. Un servicio activo, RTSP decodificable o señalización WebRTC no acreditan por sí solos imagen actual en Cockpit. Si un ensayo falla, registrar su diagnóstico antes de proponer una intervención.
+
+Las precauciones del desbloqueo SIM, incluidos intentos de PIN sin confirmar, están en la [guía de conectividad](../software/conectividad/README.md).
 
 ## 7. Cierre y registro
 
-Revisar los criterios de fase 1 del [plan](plan.md), asociando evidencia y límites. Conservar configuración aprobada por separado de los snapshots. Empezar waypoints en SITL y después en agua protegida cuando las comprobaciones permitan ese ensayo.
+Revisar los criterios de fase del [plan](plan.md), asociando evidencia y límites. Mantener configuración aprobada por separado de los snapshots. Ensayar cambios de navegación en SITL antes de las pruebas reales acordadas.
 
-Cada sesión registra ID, objetivo, fecha/zona horaria, entorno y enlace, versión/configuración, autorización, resultado, métricas, evidencias recuperables y estado final. Conservar logs DataFlash, tlog, vídeo y detecciones bajo el mismo ID cuando existan. Los archivos pesados van en `local/registros/<ID>/`; sus ubicaciones y hashes se anotan en la entrada fechada del historial.
+Cada sesión registra ID, objetivo, fecha/zona horaria, entorno y enlace, versión/configuración, autorización, resultado, métricas, evidencias recuperables y estado final. Conservar DataFlash, tlog, vídeo y detecciones bajo el mismo ID cuando existan. Los archivos pesados van en `local/registros/<ID>/`; sus ubicaciones y hashes se anotan en la entrada fechada del historial.

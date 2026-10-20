@@ -40,6 +40,20 @@ El entorno Python documentado está en `/home/pi/kame-yolo-offline/venv`; el bin
 
 El acceso directo al RTSP YOLO por cada enlace figura en [hardware e interfaces](../../docs/hardware.md#red-y-puertos). Un GCS que use literalmente la URL anunciada por MAVLink puede requerir sustituir `192.168.2.2` por la IP de su enlace.
 
+## Ensayo por Wi-Fi KAME
+
+Preparar una tarea de ensayo y seguir [preparación](../../docs/preparacion.md). Con el barco desarmado y supervisado, conectar el PC a KAME y abrir BlueOS/Cockpit por `192.168.42.1`. Registrar navegador, perfil, vista, fuente y enlace utilizados.
+
+Observar el reproductor de Cockpit durante **60 segundos** e introducir movimientos conocidos en la escena al inicio, durante la observación y al final. No hace falta mover el barco ni accionar motores. Confirmar que la imagen sigue esos cambios y mantiene reproducción continua, sin congelaciones ni errores del reproductor. Anotar pausas y retraso observado; si no se midió un retraso, indicarlo en vez de inventar una cifra.
+
+Registrar hora y resultado, evidencias de la escena actual y estado final. Una captura aislada, RTSP decodificable, procesos activos o señalización WebRTC no sustituyen la observación completa en Cockpit. Si falla, abrir una tarea de diagnóstico con los síntomas y registros antes de proponer cambios; no cerrar el ensayo como correcto después de una recuperación manual sin registrar la incidencia.
+
+## Ensayo por 4G
+
+Validar antes la [conexión automática y la ruta móvil](../conectividad/README.md#ensayo-de-arranque-4g). La Pi no debe depender de otra salida a Internet y el PC utiliza Internet independiente, accediendo a Cockpit por ZeroTier (`10.133.182.55`). El PC no usa KAME ni Ethernet hacia el barco durante este ensayo.
+
+Repetir los **60 segundos**, movimientos conocidos, registro de pausas/retraso y criterio visual del [ensayo Wi-Fi](#ensayo-por-wi-fi-kame). Registrar como tarea y resultado independientes. Confirmar la ruta móvil realmente utilizada; poder abrir la dirección ZeroTier sin conocer esa ruta no demuestra que el vídeo haya pasado por 4G.
+
 ## Inspección y control del servicio
 
 Lecturas en la Pi:

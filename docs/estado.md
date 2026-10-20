@@ -1,44 +1,48 @@
-# Último estado observado y pendientes
+# Estado actual y siguientes tareas
 
-**Última comprobación en vivo: 2026-10-19 ~19:53 CEST**, por Wi-Fi `KAME` (`192.168.42.1`). El usuario confirmó estar junto al barco, con hélices despejadas y corte de batería accesible, y cotejó la posición GPS con el lugar físico. Antes de las pruebas, el autopiloto estaba desarmado, con GPS `DGPS` de 20–21 satélites e indicador `PREARM_CHECK` saludable. Se aceptaron dos pruebas de 1 s y después dos de 5 s a 1550 µs, cada lado por separado: PWM 2 respondió para el derecho y PWM 1 para el izquierdo. El usuario no vio girar ninguno. A las 19:53:37 el vehículo seguía desarmado, con ambas salidas a 1500 µs. La telemetría confirma la orden del autopiloto pero no que llegue al ESC. No se cambiaron parámetros. Ver [diagnóstico de motores](historial/2026-10-19-motores-esc.md), [registro del GPS](historial/2026-10-19-gps.md) y [registro de orientación](historial/2026-10-19-orientacion-navigator.md).
+**Fase actual: 1 — preparación y validación del barco.** Permanece abierta por la respuesta física de motores y las comprobaciones de vídeo y conexión automática 4G. Los objetivos y criterios de avance están en el [plan](plan.md).
 
-**Último intento de enlace: 2026-10-19 ~20:07 CEST.** La red Wi-Fi `KAME` no estaba visible y BlueOS no respondió por sus direcciones Wi-Fi, doméstica o ZeroTier conocidas; no se pudo volver a comprobar el estado del vehículo. La prueba directa de PWM solicitada queda pendiente. No se detuvo ArduPilot ni se accionó el Navigator directamente. Véase el [registro de motores](historial/2026-10-19-motores-esc.md).
+**Actualización comunicada por el usuario el 2026-10-20, Europe/Madrid.** El usuario confirma armado posible, GPS correcto, ausencia de errores de brújula y calibración de acelerómetros completada con la orientación actual. Esta actualización no incluye una consulta nueva del asistente al vehículo. La fuente y el alcance están en el [registro de estado operativo](historial/2026-10-20-estado-operativo.md).
 
-El procedimiento y las lecturas previas a la nueva calibración están en [orientación del Navigator, 2026-10-19](historial/2026-10-19-orientacion-navigator.md).
+## Síntesis vigente
 
-**Actualización de montaje comunicada por el usuario el 2026-10-20:** la MMC5983 se desconectó por incompatibilidad con la Raspberry Pi 5 en esta instalación y se dejó únicamente la AK09915. Esta comunicación no incluye una nueva lectura del vehículo ni precisa la fecha de desconexión. Los parámetros de selección, prioridad y calibración de la brújula restante están pendientes de comprobar. Ver [registro de la actualización](historial/2026-10-20-brujula-mmc5983.md).
-
-| Área | Última observación documentada | Límite de esa evidencia |
+| Área | Estado | Fuente y alcance |
 | --- | --- | --- |
-| BlueOS y autopiloto | A las ~19:41–19:42 CEST, tres heartbeat frescos pasaron de contador 881 a 884 y posteriormente siguieron activos; todos tenían `base_mode=65` (desarmado). A las ~19:31 se había observado un armado transitorio (`base_mode=193`, `Throttle armed`). Entre las 18:08:30 y la recuperación de las 18:27 hubo una caída de telemetría; Linux registró un nuevo arranque de la Pi a las 18:24. | Se desconocen la causa del armado transitorio, si los motores tenían alimentación y el origen de la caída anterior. Mantener motores aislados y desarmado antes de calibrar. |
-| Actitud e IMU | A las ~19:31 CEST, seis muestras con `ATTITUDE.time_boot_ms` avanzando: `ATTITUDE.roll≈−0,46°`, `pitch≈+0,13°`; `AHRS2.roll≈−0,49°`, `pitch≈+0,14°`. | Buen acuerdo estático en posición normal según el usuario; falta calibración completa y comprobar respuesta al movimiento. La inversión transitoria anterior de ~180° no tiene causa establecida. |
-| Parámetros de IMU | Lectura por `PARAM_REQUEST_READ` vía MAVLink2REST a las ~19:02 CEST: `AHRS_ORIENTATION=101`, `CUST_ROT_ENABLE=1`, `CUST_ROT1_PITCH=-13`, `CUST_ROT1_ROLL=0`, `CUST_ROT1_YAW=0`, `AHRS_TRIM_Y=0`. El usuario guardó los parámetros y reinició. | La rotación personalizada ya está activa. El valor de −13° procede de la medida aproximada del usuario y la observación de AHRS; no equivale a una calibración completa del acelerómetro. No se cambió ningún parámetro en esta comprobación. |
-| Parámetros y salidas de motor | `FRAME_CLASS=2`, `SERVO1_FUNCTION=73` (izquierda), `SERVO2_FUNCTION=74` (derecha), `MOT_PWM_TYPE=0` (PWM normal); salidas 1 y 2 con `MIN=1100`, `MAX=1900`, `TRIM=1500`, `REVERSED=0`. A las 19:50–19:52, pruebas autorizadas de 1 s y luego 5 s a 1550 µs fueron aceptadas: PWM 2 cambió solo en la prueba derecha y PWM 1 solo en la izquierda. Ambas regresaron a 1500 µs con el vehículo desarmado. | El usuario no vio giro de ninguno de los dos motores. La salida reportada por ArduPilot no verifica señal en los pines ni alimentación/armado del ESC. El cambio anterior de `SERVO2_FUNCTION=0` a 74 sigue sin autor conocido. |
-| GPS | A las ~19:41–19:42 CEST, tres `GPS_RAW_INT` frescos indicaron `DGPS`, 20 satélites y coordenadas recibidas. Tras el reinicio de ~19:02 había mostrado temporalmente `NO_GPS`/`NO_FIX`, 0 satélites y sondeo u-blox. Los parámetros releídos fueron `GPS1_TYPE=2`, `GPS_AUTO_CONFIG=1`, `GPS1_RATE_MS=200`, `SERIAL2_PROTOCOL=5`. | El fix se recuperó, pero no se ha establecido por qué tardó tras el reinicio. La posición se cotejó por el usuario más tarde, antes de las pruebas de ~19:50; no fue una medida topográfica independiente. La discrepancia previa de 5 Hz internos frente a 2 Hz en MAVLink2REST queda pendiente. No abrir `/dev/ttyACM0` mientras ArduPilot lo usa. |
-| Brújula y prearm | Según el usuario el 2026-10-20, MMC5983 desconectada por incompatibilidad con Raspberry Pi 5 y solo AK09915 en uso. En las lecturas históricas del 2026-10-19, el aviso `PreArm: Compasses inconsistent` apareció a las 18:27:59; a las ~19:44, magnetómetro y `PREARM_CHECK` figuraron saludables y `ARMING_OPTIONS=0`. | La desconexión se registra por comunicación del usuario, sin nueva consulta al vehículo. Confirmar selección de AK09915, calibración, rumbo y prearm actuales. No atribuir a la desconexión la desaparición del aviso sin verificar la secuencia temporal. |
-| Vídeo | BlueOS anunciaba una sola fuente, `YOLO26n Person + Boat`, a 960×540/8 FPS; `/cam` permanecía como RTSP directo. A las 18:20 CEST seguían activos los procesos MediaMTX, cámara y detector. | Los procesos activos no prueban reproducción actual en Cockpit. Falta confirmar WebRTC por 4G, Wi-Fi `KAME` y Ethernet. |
-| Detector | YOLO26n NCNN FP16 a 320×320, clases `person` y `boat`; tras ajustar la cuota a 150 %, los registros rondaron 7,9–8,0 inferencias y FPS publicados por segundo. | Falta validar aciertos y falsas alarmas con escenas marítimas conocidas. |
-| 4G y ZeroTier | Inspección SSH de solo lectura por Wi-Fi `KAME` el 2026-10-19: `kame-air780eg-unlock.timer` está habilitado y activo, pero sus ejecuciones informan `Air780EG AT port absent; nothing to do`. No aparecen el módem USB Luat (`19d1:0001`), el puerto AT EigenComm ni `eth1`. La ruta consultada a `1.1.1.1` sale por `wlan0` (`192.168.0.21` → `192.168.0.1`). ZeroTier lista la red como `OK` y asigna `10.133.182.55`, pero `zerotier-cli info` indica `OFFLINE`, los pares están en `RELAY` y HTTP a BlueOS por esa IP agotó el tiempo de espera. | En esta sesión el robot no está usando 4G; el acceso a la Pi fue por Wi-Fi `KAME`. El temporizador cubre el desbloqueo de SIM cuando aparece el puerto, no demuestra que el módem esté conectado ni que 4G/ZeroTier se recupere autónomamente. Falta probar con el módem presente y tras un arranque en frío. |
-| Estabilidad de la Pi | Hubo caídas de enlace y reinicio abrupto el 2026-10-13. El 2026-10-19 se observó un apagado ordenado y nuevo arranque de la Pi a las 18:24 CEST, tras perderse la telemetría de ArduPilot a las 18:08:30. | No se determinó quién o qué inició el apagado ni la causa previa de la salida de ArduPilot. Si se repite, capturar estado por HDMI/consola y registros antes de atribuirlo a un servicio. |
+| Armado | El barco puede armarse. | Confirmado por el usuario el 2026-10-20. No significa que esté armado ahora ni acredita giro de los motores. |
+| GPS | Funciona correctamente. | Confirmado por el usuario. No se aportaron nuevas cifras de fix, satélites, precisión o tasa. |
+| Brújula | No da errores; AK09915 restante después de desconectar MMC5983. | Confirmación actual y [comunicación del montaje](historial/2026-10-20-brujula-mmc5983.md). No se han releído prioridades ni parámetros. |
+| Acelerómetros | Calibración completada con la orientación actual. | Confirmado por el usuario al preguntar por la calibración con Custom 1. No se recibieron nuevos valores ni registros de calibración. |
+| Propulsión | Respuesta física de ambos motores sin comprobar. | El usuario confirmó que todavía no ha comprobado ambos lados bajo mando. |
+| Vídeo Wi-Fi / 4G | Pendiente de verificar dentro de Cockpit por ambos enlaces. | Ningún ensayo nuevo de reproducción registrado. |
+| Arranque 4G | Pendiente de demostrar conexión automática al encender con el módem conectado. | El temporizador de SIM por sí solo no demuestra acceso remoto completo. |
 
-## Comprobaciones pendientes antes de operar
+## Próximas tareas
 
-1. Diagnosticar la salida de `ardupilot_navig` tras las 18:08:30 CEST y comprobar la estabilidad del heartbeat recuperado. La Pi volvió a arrancar a las 18:24, pero se desconocen la causa de la salida y quién o qué inició el apagado. Cualquier nuevo reinicio o cambio de parámetro requiere autorización explícita y comprobación de seguridad.
-2. Aclarar por qué ninguno de los ESC/motores giró pese a que ArduPilot aceptó los cuatro pulsos y reportó el PWM esperado: confirmar modelo de ESC/motor por lado, estado de alimentación/armado de cada ESC y señal real en sus conectores. Comprobar que el indicador prearm saludable se mantiene en cada sesión; la posición GPS ya fue cotejada por el usuario. Aclarar qué solicitud o configuración limita `GPS_RAW_INT` a 2 Hz en MAVLink2REST, mientras ArduPilot registra GPS a ~5 Hz.
-3. Verificar imagen actual y fluida dentro de Cockpit por el enlace que vaya a usarse; RTSP y señalización WebRTC por separado no bastan.
-4. Probar detecciones positivas de persona/barco y escenas negativas representativas; medir falsas alarmas y objetos pequeños o lejanos.
-5. Comprobar la recuperación de 4G/ZeroTier con el módem conectado y tras un arranque en frío: SIM `READY`, `eth1` y ruta predeterminada por el módem, ZeroTier `ONLINE`, y acceso a BlueOS/SSH. Repetir medidas de latencia/caudal en el lugar de uso.
-6. Completar y validar la calibración de acelerómetros con la orientación actual, confirmar que ArduPilot utiliza únicamente la AK09915 tras la desconexión comunicada de la MMC5983 y verificar calibración, rumbo y respuesta al movimiento. Documentar las pérdidas de enlace antes de ampliar pruebas controladas.
+Todas están pendientes; se preparan y registran por separado. Los ensayos se realizan con el barco desarmado y los encendidos físicos supervisados.
 
-Las evidencias y medidas originales están en el [historial](historial/README.md), el registro de [vídeo](historial/recursos.json) y las guías de cada subsistema.
+| Orden / ID | Tarea y procedimiento | Criterio de aceptación |
+| --- | --- | --- |
+| 1 — F1-VIDEO-WIFI | [Vídeo por Wi-Fi KAME](../software/video/README.md#ensayo-por-wi-fi-kame). | 60 s de imagen actual en Cockpit, movimientos conocidos en la escena, reproducción continua y sin errores. Registrar pausas y retraso observado. |
+| 2 — F1-ARRANQUE-4G | [Conexión automática al encender](../software/conectividad/README.md#ensayo-de-arranque-4g). | Dos encendidos consecutivos con módem conectado y sin otra salida a Internet en la Pi. En cada intento, acceso remoto completo en un máximo inicial de 5 min, sin intervención manual de software. Registrar tiempos reales. |
+| 3 — F1-VIDEO-4G | [Vídeo por 4G](../software/video/README.md#ensayo-por-4g), tras confirmar la ruta móvil. | Repetir los 60 s y movimientos conocidos dentro de Cockpit desde un PC con Internet independiente. RTSP o procesos activos no bastan. |
+| 4 — F1-MOTORES | [Comprobar respuesta por lado](preparacion.md#5-propulsión-y-control-manual). | Procedimiento específico autorizado y supervisado, respuesta física observada en cada lado y estado final registrado. La capacidad de armar no cierra esta tarea. |
 
-## Trabajo actual del proyecto
+Para F1-ARRANQUE-4G se comprueban SIM, interfaz móvil, ruta por el módem y ZeroTier; deben funcionar BlueOS, SSH y heartbeat fresco por ZeroTier. El AP KAME puede permanecer activo. Si hay que conectar manualmente o reiniciar un servicio, ese intento no cumple. Un intento de PIN sin confirmar se registra y revisa antes de repetirlo.
 
-**Fase 1 abierta:** preparación y validación del barco según el [plan](plan.md). La reestructuración del 2026-10-20 es trabajo local, no una nueva observación del vehículo; sus comprobaciones están en el [registro de migración](historial/2026-10-20-reestructuracion.md).
+Cada resultado indicará fecha/zona horaria, fuente, enlace, condiciones, evidencia y estado final. Si falla vídeo o arranque, abrir una tarea de diagnóstico concreta antes de proponer cambios de configuración. Las condiciones generales están en [preparación](preparacion.md).
 
-1. **F1-01 — recuperar evidencia fresca:** comprobar enlace, heartbeat, armado, GPS, prearm y estabilidad con consultas de solo lectura. Registrar lo que no se pueda comprobar.
-2. **F1-02 — identificar propulsión:** confirmar ESC/motor y alimentación por lado, conexión real y señal. Preparar un diagnóstico concreto antes de nuevas pruebas autorizadas.
-3. **F1-03 — calibración:** confirmar AK09915 como única brújula en uso y validar su calibración/rumbo y los acelerómetros con Custom 1, con motores aislados y supervisión.
-4. **F1-04 — supervisión y red:** verificar imagen actual en Cockpit; validar 4G y recuperación si la siguiente campaña usará ese enlace.
+## Última inspección directa del asistente
 
-Trabajo de software posterior: frescura independiente de GPS/armado en el visor; evaluación de YOLO; procedencia y recuperación externa de recursos; preparación de publicación y licencia de GitHub. La tasa GPS de MAVLink2REST requiere aclaración, sin confundirla con la tasa del receptor/registro de ArduPilot.
+La última lectura directa del vehículo fue el **2026-10-19 ~19:53 CEST**, por Wi-Fi KAME. Tras las pruebas PWM autorizadas, heartbeat desarmado y salidas 1/2 a 1500 µs; no se observó giro. El último intento de enlace de esa sesión, a las ~20:07, falló. Son observaciones históricas; no describen la conectividad actual tras la actualización del usuario.
+
+Los registros conservan el [diagnóstico de motores](historial/2026-10-19-motores-esc.md), [GPS y telemetría](historial/2026-10-19-gps.md) y [orientación](historial/2026-10-19-orientacion-navigator.md). No se repitieron pruebas ni se cambiaron parámetros durante esta actualización documental.
+
+## Antecedentes y trabajo posterior
+
+- Las caídas de telemetría/enlace y el armado transitorio anteriores conservan causa sin determinar. No hay evidencia nueva que los sitúe como fallos presentes ni que permita cerrar su causa. Revisar su disposición antes de ampliar los ensayos según el plan.
+- La calibración que figuraba pendiente quedó sustituida por la confirmación del usuario de que está completada. Las futuras sesiones mantienen las comprobaciones previas normales.
+- La diferencia entre GPS interno/registrado a ~5 Hz y GPS_RAW_INT a ~2 Hz en MAVLink2REST queda como análisis posterior.
+- La evaluación de YOLO con escenas conocidas y falsas alarmas sigue pendiente antes de utilizarlo para evasión.
+- También quedan la frescura independiente de GPS/armado en el visor, la procedencia y recuperación externa de recursos, y la publicación/licencia de GitHub.
+
+El [historial](historial/README.md) conserva la evidencia y las actualizaciones anteriores.

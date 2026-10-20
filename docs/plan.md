@@ -1,6 +1,6 @@
 # Plan de Kame
 
-La fase activa es la **1: preparación y validación del barco**. Las fases se cierran con evidencia, no por tener archivos o servicios instalados. El [estado](estado.md) conserva los bloqueos y el siguiente trabajo; la [preparación](preparacion.md) explica el procedimiento actual.
+Este documento define los objetivos y criterios de avance de las cinco fases. Las fases se cierran con evidencia, no por tener archivos o servicios instalados. La fase activa, los avances y el siguiente trabajo se consultan en [estado](estado.md); la [preparación](preparacion.md) explica los procedimientos.
 
 | Fase | Objetivo | Entregables y criterios de salida |
 | --- | --- | --- |

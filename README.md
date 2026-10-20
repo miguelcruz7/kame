@@ -2,7 +2,7 @@
 
 Vehículo de superficie con Raspberry Pi 5, BlueOS, Navigator64 y ArduRover. Integra navegación por waypoints, cámara IMX462, vídeo YOLO en Cockpit y acceso móvil.
 
-**Fase actual: 1 — preparación y validación del barco.** La última observación del vehículo es del 2026-10-19; el estado físico debe comprobarse de nuevo antes de operar. La reorganización local no es una inspección del barco.
+La fase activa, las comprobaciones comunicadas y el siguiente trabajo se consultan en [estado.md](docs/estado.md). Los objetivos y criterios de avance están en el [plan](docs/plan.md).
 
 ## Por dónde empezar
 

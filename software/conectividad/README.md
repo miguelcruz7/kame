@@ -20,7 +20,28 @@ El temporizador de systemd se instaló en `/etc/systemd/system/kame-air780eg-unl
 
 Este temporizador automatiza **la comprobación y el desbloqueo de la SIM**. Por sí mismo no demuestra que el módem esté presente, que `eth1` tenga conectividad, que la ruta de Internet salga por el módem o que ZeroTier esté operativo. Para validar 4G tras encender, comprobar que existe el puerto AT, que la SIM queda `READY`, que `eth1` tiene la ruta esperada y que ZeroTier está `ONLINE`; `listnetworks` con estado `OK` no sustituye esas comprobaciones. La extensión ZeroTier se administra en Extensions Manager de BlueOS, que normalmente inicia las extensiones instaladas al arrancar ([documentación de BlueOS](https://blueos.cloud/docs/stable/development/extensions/)); confirmar también que la extensión no esté deshabilitada.
 
-La observación en vivo del 2026-10-19 encontró el temporizador habilitado y activo, pero el módem USB, el puerto AT y `eth1` ausentes. El registro del servicio decía `Air780EG AT port absent; nothing to do`. Por eso aún falta una prueba de arranque en frío con el módem conectado; ver el [estado observado](../../docs/estado.md).
+La observación del 2026-10-19 encontró el temporizador habilitado y activo, pero módem USB, puerto AT y `eth1` ausentes, con `Air780EG AT port absent; nothing to do`. Es un antecedente de esa sesión, no una descripción de la presencia actual del módem. La situación vigente y los ensayos siguientes se consultan en [estado](../../docs/estado.md).
+
+## Ensayo de arranque 4G
+
+Preparar una tarea y registrar cada intento por separado, siguiendo [preparación](../../docs/preparacion.md). Realizar **dos encendidos consecutivos** del barco con el módem conectado desde antes de encender. El barco permanece desarmado y cada encendido/apagado físico debe estar supervisado y acordado.
+
+Condiciones: módem/SIM instalados, cobertura disponible, PC con Internet independiente y ZeroTier preparado. La Pi no tiene otra salida a Internet: Ethernet no proporciona enlace y no hay un enlace Wi-Fi cliente con salida alternativa. El AP KAME puede permanecer activo. Preparar estas condiciones antes del ensayo; no cambiar la red o los servicios durante la medida para convertir un intento fallido en correcto.
+
+Desde cada encendido, medir el tiempo hasta cumplir **todas** estas comprobaciones, con un máximo inicial de **cinco minutos por intento**:
+
+1. Módem identificado y SIM lista. Revisar el estado mediante la información disponible y los registros del servicio; no introducir el PIN manualmente para aprobar el intento.
+2. Interfaz móvil presente (documentada como `eth1`), configuración/ruta válida y salida efectiva por el módem. Verificar identidad y ruta, no solo el nombre de interfaz.
+3. ZeroTier indica `ONLINE` y la red está disponible. `listnetworks: OK` por sí solo no basta.
+4. Desde el PC independiente funcionan BlueOS y SSH por ZeroTier y se reciben heartbeat frescos con contador que avanza. Confirmar estado desarmado antes de continuar.
+
+Las consultas de solo lectura desde el PC forman parte de la verificación. No debe ser necesario desbloquear la SIM, conectar la red, reiniciar procesos o arrancar servicios manualmente en el barco. Si se necesita cualquiera de esas intervenciones, ese intento no cumple, aunque después haya acceso.
+
+El servicio de desbloqueo conserva el PIN en `/etc/kame/air780eg-pin`. Si hay un intento de PIN sin confirmar o existe `pin-attempt-pending`, registrarlo y revisar el estado antes de repetirlo; no borrar la marca ni forzar nuevos intentos para completar el ensayo. Verificar la identidad del puerto AT documentado antes de cualquier consulta manual y no abrir el puerto GPS que usa ArduPilot.
+
+Registrar t0, tiempos de cada hito y de conexión completa, interfaz/ruta observadas, estados de ZeroTier, fuente de la lectura SIM, acceso BlueOS/SSH, heartbeat y estado final. Las dos repeticiones deben cumplir. Si falta acceso, recoger después los registros por un enlace de diagnóstico autorizado y mantener el resultado original como fallido o interrumpido, con el motivo; abrir una tarea concreta antes de modificar configuración.
+
+Este ensayo valida la cadena completa. El temporizador SIM no demuestra por sí solo el resultado. El [vídeo por 4G](../video/README.md#ensayo-por-4g) se comprueba después como ensayo visual independiente.
 
 ## Conexión diaria
 
@@ -41,6 +62,7 @@ En la Raspberry:
 ip route get 1.1.1.1
 systemctl status --no-pager kame-air780eg-unlock.timer
 journalctl -u kame-air780eg-unlock.service -n 20 --no-pager
+docker exec extension-williangalvanizerotierv1143 zerotier-cli info
 docker exec extension-williangalvanizerotierv1143 zerotier-cli listnetworks
 docker exec extension-williangalvanizerotierv1143 zerotier-cli peers
 ```
