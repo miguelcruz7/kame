@@ -1,0 +1,30 @@
+name: Tarea de Kame
+description: Definir un cambio o ensayo con un resultado verificable.
+title: "[F1] "
+body:
+  - type: textarea
+    id: objetivo
+    attributes:
+      label: Objetivo y fase
+      description: Qué resultado se busca y cómo contribuye a la fase del plan.
+    validations:
+      required: true
+  - type: textarea
+    id: alcance
+    attributes:
+      label: Alcance y entorno
+      description: Componente y entorno (local, reproducción, SITL o vehículo). Para el vehículo, indicar supervisión y autorización aplicable sin publicar credenciales.
+    validations:
+      required: true
+  - type: textarea
+    id: aceptacion
+    attributes:
+      label: Criterios de aceptación
+      description: Comprobaciones y resultados observables que permiten cerrar la tarea.
+    validations:
+      required: true
+  - type: textarea
+    id: evidencia
+    attributes:
+      label: Evidencia y recuperación
+      description: Registros necesarios, estado final esperado y reversión si procede. No adjuntar secretos ni registros privados sin revisar.
