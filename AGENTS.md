@@ -39,6 +39,8 @@ Para cambios versionados: tarea → rama → cambio → comprobaciones → revis
 
 Cerrar una tarea solo cuando se cumplan sus criterios y comprobaciones exigidas. Corregir los fallos y repetir las pruebas afectadas. Si un impedimento externo bloquea la verificación, entregar el trabajo como incompleto indicando qué falta; una prueba no ejecutada permanece pendiente. Las pruebas simuladas no acreditan resultados físicos.
 
+**Traspaso de trabajo incompleto.** Si una tarea queda bloqueada, falla o se detiene sin cumplir sus criterios, dejar antes de terminar un registro suficiente para retomarla: estado actual, métodos probados y sus resultados, cambios aplicados o revertidos, conclusiones e hipótesis abiertas, evidencias disponibles y siguiente paso recomendado. El detalle debe registrarse en `docs/historial/` cuando corresponda a una intervención, ensayo o diagnóstico del vehículo o de sus servicios; si cambia el estado vigente o los siguientes pasos, actualizar también `docs/estado.md`. Los cambios puramente de software pueden quedar documentados en la PR o tarea correspondiente. No presentar como hecho una hipótesis no verificada.
+
 ## Revisión e integración
 
 El agente revisa sus diferencias: alcance, efectos, documentación, secretos y resultados. Si el encargo reserva la revisión a una persona u otro revisor, mantener la PR pendiente hasta recibirla.
