@@ -38,7 +38,7 @@ En cada sesión se comprueban actitud, rumbo, GPS y prearm actuales siguiendo [p
 
 El módem Luat Air780EG usa `eth1` (`192.168.10.2/24`, gateway `192.168.10.1`) y puerto AT `/dev/ttyACM1`. No enviar comandos de módem a `/dev/ttyACM0`: pertenece al GPS. Las instancias RTSP escuchaban en `0.0.0.0:8554` y `0.0.0.0:8556` desde el cambio del 2026-10-16; `0.0.0.0` es una dirección de escucha, no una URL para clientes. El detector usa `127.0.0.1` para leer y publicar RTSP dentro de la Pi.
 
-La red ZeroTier privada documentada es `ID_ZEROTIER_PRIVADO`, con Raspberry `10.133.182.55` y PC `10.133.182.131`. Detalles de instalación y diagnóstico: [acceso móvil](../software/conectividad/README.md).
+La red ZeroTier privada tiene Raspberry `10.133.182.55` y PC `10.133.182.131`. Su ID y las identidades de los nodos se conservan en `local/red.md`, excluido de Git. Detalles de instalación y diagnóstico: [acceso móvil](../software/conectividad/README.md).
 
 ## Propulsión y configuración
 

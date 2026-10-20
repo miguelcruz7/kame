@@ -10,7 +10,7 @@ Guía de la instalación documentada el **2026-10-16**: módem Luat Air780EG por
 | Desbloqueo de SIM | `/usr/local/sbin/kame-air780eg-unlock.py`, `kame-air780eg-unlock.service` y `.timer`. PIN en `/etc/kame/air780eg-pin` (directorio `0700`, archivo `0600`). |
 | ZeroTier en BlueOS | Extensión `williangalvani.zerotier` v1.14.3; identidad en `/usr/blueos/extensions/zerotier`. |
 | ZeroTier en Windows | ZeroTier One 1.16.2, servicio `ZeroTierOneService` de inicio automático. |
-| Red privada | ID `ID_ZEROTIER_PRIVADO`; PC `10.133.182.131` y Pi `10.133.182.55` en la sesión documentada. |
+| Red privada | ID e identidades de nodos en `local/red.md`, excluido de Git; PC `10.133.182.131` y Pi `10.133.182.55` en la sesión documentada. |
 
 El archivo local `zerotier-local.conf` se instaló como `/usr/blueos/extensions/zerotier/local.conf` para excluir `192.168.2.0/24` y `eth0` del túnel y favorecer el módem. Los servicios y el script de desbloqueo tienen sus fuentes en esta carpeta. **No usar `/dev/ttyACM0` para comandos AT**: pertenece al GPS u-blox.
 

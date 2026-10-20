@@ -26,7 +26,7 @@ Se actualizaron enlaces y rutas relativas; el generador admite `--output-dir`. S
 | SITL | Ubuntu 22.04 de WSL, x86_64: arranque con los defaults existentes y heartbeat de contador 3 a 6, desarmado. SIGTERM al lanzador cerró sus procesos y liberó HTTP 8088/UDP 14550. |
 | YAML | Workflow, formulario de tarea y configuración MediaMTX analizados localmente con PyYAML. El workflow todavía no se ha ejecutado en GitHub. |
 | Clon limpio | Se clonó Git en `local/verificacion/checkout/`, sin credenciales, binarios ni modelos. Las comprobaciones portátiles completas también pasaron allí. |
-| Git | Base saneada `586435a`; migración `59b7323`; comprobaciones y plantillas `698a005`. La entrega se integra en `main` mediante avance rápido; no se configura remoto. |
+| Git | Base saneada `40c8c4c`; migración `1284e5f`; comprobaciones y plantillas `dacd469`. La entrega se integra en `main` mediante avance rápido; no se configura remoto en esta tarea. Los identificadores citados corresponden al historial saneado posteriormente para su [publicación](2026-10-20-publicacion-github.md). |
 
 El ensayo SITL detectó que este binario MAVLink2REST representa bitflags mediante nombres; el comprobador acepta tanto nombres como valores numéricos. También distingue los sockets TIME_WAIT de un puerto ocupado por un listener. Estas adaptaciones corresponden al comprobador local, no a cambios del vehículo ni del visor.
 

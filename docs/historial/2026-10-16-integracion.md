@@ -2,6 +2,8 @@
 
 Registro de observaciones y cambios del día. Las comprobaciones sucedieron en sesiones distintas y no equivalen a un estado simultáneo. Consultar [estado observado](../estado.md) antes de operar. Los valores operativos de PIN y contraseña se conservan en el archivo privado indicado por [AGENTS.md](../../AGENTS.md#credenciales-y-recursos-privados).
 
+Nota de publicación del 2026-10-20: los identificadores de red y nodos se sustituyen por etiquetas en la versión pública; los valores originales se conservan en `local/red.md` y en el respaldo privado del historial.
+
 ## BlueOS, GPS y compases
 
 - Por Wi-Fi `KAME`, BlueOS respondió HTTP 200 en `192.168.42.1`; el contador de `HEARTBEAT` avanzó de 973 a 975 en dos segundos. El autopiloto estaba desarmado. En otra lectura, `GPS_RAW_INT` dio fix 3D y 12 satélites.

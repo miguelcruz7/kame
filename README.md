@@ -48,4 +48,8 @@ El código y la documentación están en Git. `local/` contiene credenciales, ej
 
 Las credenciales se conservan exclusivamente en `local/credenciales.md`; leerlas solo cuando una tarea autorizada las necesite y evitar mostrarlas. El PIN instalado sigue en `/etc/kame/air780eg-pin`.
 
-GitHub y la licencia se decidirán antes de publicar. Las coordenadas e IP históricas se conservan como datos técnicos; se revisarán antes de hacer público el repositorio. El [historial](docs/historial/README.md) conserva las pruebas y la [migración](docs/historial/2026-10-20-reestructuracion.md) describe el respaldo y las verificaciones locales.
+El repositorio público está en [miguelcruz7/kame](https://github.com/miguelcruz7/kame), con `main` como rama principal. Los cambios se preparan en una rama, se comprueban localmente y se revisan mediante pull request antes de integrarlos. GitHub Actions ejecuta las [comprobaciones del repositorio](.github/workflows/checks.yml) en cada envío y pull request.
+
+Los identificadores de la red ZeroTier se conservan en `local/red.md`. Las direcciones IP privadas y las coordenadas de los borradores SITL permanecen como referencias técnicas. No se ha añadido una licencia propia; su elección y la revisión de licencias de dependencias siguen pendientes.
+
+El [historial](docs/historial/README.md) conserva las pruebas; la [migración](docs/historial/2026-10-20-reestructuracion.md) describe el respaldo y las verificaciones locales, y el [registro de publicación](docs/historial/2026-10-20-publicacion-github.md) recoge el alcance público y la preservación del historial privado.

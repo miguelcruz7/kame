@@ -43,6 +43,6 @@ Los registros conservan el [diagnóstico de motores](historial/2026-10-19-motore
 - La calibración que figuraba pendiente quedó sustituida por la confirmación del usuario de que está completada. Las futuras sesiones mantienen las comprobaciones previas normales.
 - La diferencia entre GPS interno/registrado a ~5 Hz y GPS_RAW_INT a ~2 Hz en MAVLink2REST queda como análisis posterior.
 - La evaluación de YOLO con escenas conocidas y falsas alarmas sigue pendiente antes de utilizarlo para evasión.
-- También quedan la frescura independiente de GPS/armado en el visor, la procedencia y recuperación externa de recursos, y la publicación/licencia de GitHub.
+- También quedan la frescura independiente de GPS/armado en el visor, la procedencia y recuperación externa de recursos, y la elección de licencia y revisión de licencias de dependencias. El repositorio se publica en [GitHub](https://github.com/miguelcruz7/kame), según su [registro de publicación](historial/2026-10-20-publicacion-github.md).
 
 El [historial](historial/README.md) conserva la evidencia y las actualizaciones anteriores.

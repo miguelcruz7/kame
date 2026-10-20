@@ -13,6 +13,7 @@ Las entradas registran lo observado o cambiado en su fecha. La síntesis más re
 | 2026-10-20 | [Reestructuración y verificaciones locales](2026-10-20-reestructuracion.md). |
 | 2026-10-20 | [Comunicación del usuario: MMC5983 desconectada y AK09915 como única brújula](2026-10-20-brujula-mmc5983.md). |
 | 2026-10-20 | [Estado operativo comunicado y ensayos pendientes](2026-10-20-estado-operativo.md). |
+| 2026-10-20 | [Publicación en GitHub y revisión del contenido público](2026-10-20-publicacion-github.md). |
 
 ## Archivos de evidencia
 
