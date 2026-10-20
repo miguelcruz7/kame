@@ -21,6 +21,7 @@ child.stderr.on('data', (chunk) => { logs += chunk; });
 // Adjuntar inmediatamente para recoger también una salida de arranque temprana.
 const exited = once(child, 'exit');
 const base = `http://127.0.0.1:${port}`;
+const eventsAbort = new AbortController();
 
 async function statusWhenReady(source) {
   const deadline = Date.now() + 8000;
@@ -60,22 +61,24 @@ try {
   });
   assert.equal(rejected.status, 400);
 
-  const events = await fetch(`${base}/events`);
+  const events = await fetch(`${base}/events`, { signal: eventsAbort.signal });
   assert.match(events.headers.get('content-type'), /text\/event-stream/);
   const reader = events.body.getReader();
-  try {
-    const first = await reader.read();
-    assert.match(new TextDecoder().decode(first.value), /^data: /);
-  } finally {
-    await reader.cancel();
-  }
-  console.log('OK: visor trasladado, página/API/SSE y cambio de origen con telemetría simulada');
+  const first = await reader.read();
+  assert.match(new TextDecoder().decode(first.value), /^data: /);
+  // Mantener SSE abierto para comprobar el cierre con un navegador conectado.
 } finally {
-  child.kill('SIGTERM');
-  await Promise.race([exited, sleep(3000)]);
-  if (child.exitCode === null && child.signalCode === null) {
-    child.kill('SIGKILL');
-    await exited;
-    throw new Error('El visor de pruebas necesitó cierre forzado');
+  try {
+    child.kill('SIGTERM');
+    await Promise.race([exited, sleep(3000)]);
+    if (child.exitCode === null && child.signalCode === null) {
+      child.kill('SIGKILL');
+      await exited;
+      throw new Error('El visor de pruebas necesitó cierre forzado');
+    }
+    if (process.platform !== 'win32') assert.equal(child.exitCode, 0, logs);
+  } finally {
+    eventsAbort.abort();
   }
 }
+console.log('OK: visor trasladado, página/API/SSE, cambio de origen y cierre con SSE abierto');

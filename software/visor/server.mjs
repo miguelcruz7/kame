@@ -222,15 +222,27 @@ server.listen(PORT, '127.0.0.1', () => {
 });
 
 let polling = false;
+let stopping = false;
+let pollTimer;
 async function tick() {
-  if (polling) return;
+  if (polling || stopping) return;
   polling = true;
   await pollBlueOS();
   polling = false;
   const delay = state.online ? 100 : 800;
-  setTimeout(tick, delay);
+  if (!stopping) pollTimer = setTimeout(tick, delay);
 }
 tick();
 
-process.on('SIGINT', () => server.close(() => process.exit(0)));
-process.on('SIGTERM', () => server.close(() => process.exit(0)));
+function shutdown() {
+  if (stopping) return;
+  stopping = true;
+  clearTimeout(pollTimer);
+  for (const client of clients) client.end();
+  clients.clear();
+  server.close(() => process.exit(0));
+  server.closeAllConnections();
+}
+
+process.on('SIGINT', shutdown);
+process.on('SIGTERM', shutdown);
