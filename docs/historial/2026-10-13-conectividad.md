@@ -16,7 +16,7 @@ Tras la recuperación, las tres unidades de vídeo estaban activas, ambos RTSP d
 
 El contenedor de Cockpit atendió `GET /` y `/register_service` con HTTP 200. Permaneció `running`, `RestartCount=0`, `OOMKilled=false`. Durante 5 min 49 s se tomaron 30 muestras (11:18:08–11:23:57 del reloj de la Pi): `eth0` siguió `UP` en `192.168.2.2/24`; las tres unidades de vídeo estuvieron activas; temperatura 56,0–58,7 °C, `throttled=0x0`, unos 14 GiB disponibles, proceso YOLO 56,7–57,0 % de un núcleo y ~460–468 MB RSS. `docker stats` de Cockpit marcó 0,00 % CPU y 2,734 MiB en esas muestras. No hubo eventos de kernel/alerta.
 
-Una muestra de `top` dio load average 6,99/5,80/4,19; `mtxrpicam` consumía ~70,6 % de un núcleo, YOLO ~52,9 %, MAVLink Camera Manager y ArduPilot ~17,6 % cada uno, y cada MediaMTX ~5,9 %. Dos lecturas de `vmstat` mostraron 54–57 % idle, 1–2 tareas ejecutables, ninguna bloqueada y sin swap. Abrir Cockpit coincidió con un periodo estable; estas muestras no establecen causalidad respecto a las caídas. Registro completo: [`cockpit-live-observation-2026-10-13.txt`](../../yolo-cockpit/diagnostics/cockpit-live-observation-2026-10-13.txt).
+Una muestra de `top` dio load average 6,99/5,80/4,19; `mtxrpicam` consumía ~70,6 % de un núcleo, YOLO ~52,9 %, MAVLink Camera Manager y ArduPilot ~17,6 % cada uno, y cada MediaMTX ~5,9 %. Dos lecturas de `vmstat` mostraron 54–57 % idle, 1–2 tareas ejecutables, ninguna bloqueada y sin swap. Abrir Cockpit coincidió con un periodo estable; estas muestras no establecen causalidad respecto a las caídas. Registro completo: [`cockpit-live-observation-2026-10-13.txt`](recursos.json).
 
 ## GPS y evaluación del detector
 

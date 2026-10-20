@@ -1,29 +1,45 @@
-# Instrucciones para trabajar en Kame
+# Trabajar en Kame
 
-## Objetivo y documentación
+## Orden de lectura
 
-Avanzar primero en [SITL](sitl/README.md), luego probar el vehículo en condiciones controladas y finalmente considerar pruebas en el mar. Leer [el estado observado](docs/estado.md) y la guía del subsistema correspondiente antes de actuar. Las observaciones fechadas son históricas hasta que se vuelvan a verificar.
+1. [Estado observado y siguiente trabajo](docs/estado.md).
+2. [Plan de cinco fases](docs/plan.md), empezando por la fase activa.
+3. [Hardware](docs/hardware.md), [preparación](docs/preparacion.md) y README del componente afectado.
 
-## Inspección inicial del vehículo
+La fase actual es preparar y validar el barco. SITL permite ensayar cambios de navegación; Gazebo y ROS 2 se incorporarán en su fase. Las observaciones fechadas son históricas hasta volver a verificarse.
 
-1. Elegir el enlace disponible: Wi-Fi `KAME` (`http://192.168.42.1/`), Ethernet (`http://192.168.2.2/`) o ZeroTier/4G (`http://10.133.182.55/`).
-2. Empezar con consultas de solo lectura. Confirmar heartbeat MAVLink y estado de armado; leer `GPS_RAW_INT` (fix, satélites y coordenadas), avisos de prearm/brújula y estado de cámara y vídeo.
-3. Registrar fecha, enlace usado, fuente de cada lectura y cualquier dato que no haya podido comprobarse. No inferir el estado de un componente a partir de otro: HTTP 200 de BlueOS no demuestra telemetría ni reproducción WebRTC.
+## Flujo de trabajo
 
-## Vía de interacción con BlueOS y el vehículo
+Trabajar con una tarea de objetivo concreto, alcance y criterios de aceptación. Seguir: tarea → rama → cambio → comprobaciones → revisión → resultado registrado. Hasta disponer de GitHub, el siguiente trabajo se mantiene en `docs/estado.md`; después se enlazan los issues desde ese documento.
 
-- Priorizar consultas de solo lectura por API documentada de BlueOS, MAVLink/MAVLink2REST o SSH para comprobar sensores, parámetros, asignaciones, servicios y registros. Verificar que el endpoint y su respuesta corresponden a la versión instalada; no asumir que una lectura histórica sigue vigente.
-- Usar la interfaz web cuando aporte una comprobación visual o una función sin API fiable. En particular, confirmar en Cockpit que el vídeo WebRTC muestra una imagen actual y fluida: un RTSP operativo o una fuente anunciada por BlueOS no lo demuestran.
-- Para un cambio expresamente autorizado, guardar antes el valor o configuración vigente, aplicar solo el cambio acordado mediante una vía documentada y leer después el estado resultante. Registrar el valor anterior, el nuevo, la fecha y el resultado. Respetar siempre los límites de actuación siguientes.
+- Mantener código, configuración y README juntos en su componente. Evitar documentación duplicada y carpetas para funcionalidades aún no implementadas.
+- Separar organización y cambios funcionales. Los traslados locales no cambian las rutas instaladas en la Raspberry.
+- Antes de entregar, ejecutar desde la raíz `python .github/checks/check_repository.py`. Usa Python 3.12+, Node.js 20+ y Git, sin paquetes de percepción ni acceso al vehículo. En Linux comprueba también sintaxis Bash.
+- Para cambios de navegación o del arranque SITL, ejecutar además `python3 .github/checks/check_sitl.py` en Linux/WSL con los recursos descritos en su README. Esta comprobación usa únicamente loopback.
+- Registrar qué se verificó, su resultado y límites. Una comprobación sintáctica no valida calibración ni funcionamiento físico.
 
-## Credenciales documentadas
+## Inspección del vehículo
 
-Las credenciales operativas están en `local/credenciales.md`, excluido de Git. El PIN instalado permanece en `/etc/kame/air780eg-pin`. No copiar contraseñas, PIN, tokens ni identidades privadas a archivos versionados.
+Elegir un enlace de la [tabla de redes](docs/hardware.md#red-y-puertos). Empezar por consultas de solo lectura: heartbeat fresco, armado, `GPS_RAW_INT` (fix, satélites y coordenadas), avisos prearm/brújula y cámara/vídeo. Registrar fecha, enlace, fuente de cada lectura y lo que no pudo comprobarse.
 
-## Límite de actuación
+Priorizar API documentada de la versión instalada de BlueOS, MAVLink/MAVLink2REST o SSH. Usar la interfaz cuando aporte evidencia visual o una función sin API fiable. HTTP 200 no demuestra telemetría; RTSP o una fuente anunciada no demuestran WebRTC actual y fluido dentro de Cockpit.
 
-No cambiar parámetros, firmware o asignaciones de puerto, ni reiniciar, armar o accionar motores sin autorización explícita y comprobación de seguridad. Mantener el vehículo desarmado mientras existan avisos de brújula o no se haya validado el GPS. Los procedimientos de diagnóstico y reversión de [vídeo](yolo-cockpit/README.md) y [red móvil](mobile-access/README.md) deben leerse antes de usarse.
+## Límites de actuación
 
-## Registro
+No cambiar parámetros, firmware o asignaciones de puerto, ni reiniciar, armar o accionar motores sin autorización explícita y comprobación de seguridad. Mantener el barco desarmado mientras existan avisos de brújula o no se haya validado el GPS. Las autorizaciones históricas no acreditan las condiciones físicas de una nueva sesión.
 
-Actualizar [docs/estado.md](docs/estado.md) con la última observación verificable y mover mediciones e incidencias extensas a [docs/historial/](docs/historial/README.md). Mantener las credenciales operativas en el archivo local privado cuando cambien; no publicar tokens locales. El inventario y los puertos están en [docs/hardware.md](docs/hardware.md).
+Antes de un cambio autorizado, guardar el valor o configuración vigente, aplicar solo lo acordado, leer el resultado y registrar valor anterior, nuevo, fecha, comprobaciones y reversión. Leer los procedimientos de [vídeo](software/video/README.md) o [conectividad](software/conectividad/README.md) antes de intervenir. Conservar la cámara original `/cam` cuando se trabaje en YOLO.
+
+## Credenciales y recursos privados
+
+Las credenciales operativas están en `local/credenciales.md`, excluido de Git. Leerlas únicamente cuando sean necesarias; no copiarlas a Markdown versionado, salida de comandos, issues o PR. Mantenerlas ahí si cambian. No publicar tokens locales, claves ni identidades de red.
+
+El PIN instalado permanece en `/etc/kame/air780eg-pin`. El temporizador Air780EG solo debe intentarlo cuando la SIM indique `SIM PIN`; si hay un intento sin confirmar, comprobar su estado antes de repetirlo. `/dev/ttyACM1` era el puerto AT y `/dev/ttyACM0` el GPS: verificar identidad antes de abrir un dispositivo y no competir por el puerto que usa ArduPilot.
+
+Mantener binarios, modelos, wheels, cachés y registros pesados en `local/`. Sus originales y procedencia están en el [inventario](docs/historial/recursos.json). No eliminar archivos únicos durante una limpieza.
+
+## Registro de trabajo
+
+Actualizar [estado.md](docs/estado.md) con observaciones verificables y el siguiente trabajo; conservar mediciones extensas en el [historial](docs/historial/README.md). Un ensayo registra ID, fecha/zona horaria, objetivo, entorno, versión Git y cambios locales, configuración antes/después, autorización cuando proceda, resultado, evidencias y estado final. Los archivos crudos se conservan en `local/registros/<ID>/` o en un archivo privado recuperable, con ubicación y hash anotados.
+
+Los fallos pendientes del visor, YOLO o el vehículo se corrigen en tareas específicas; no se consideran resueltos por reorganizar el repositorio.

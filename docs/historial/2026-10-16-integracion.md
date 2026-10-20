@@ -1,6 +1,6 @@
 # 2026-10-16 · GPS, vídeo, brújulas y acceso remoto
 
-Registro de observaciones y cambios del día. Las comprobaciones sucedieron en sesiones distintas y no equivalen a un estado simultáneo. Consultar [estado observado](../estado.md) antes de operar. Los valores operativos de PIN y contraseña se mantienen en [AGENTS.md](../../AGENTS.md#credenciales-documentadas).
+Registro de observaciones y cambios del día. Las comprobaciones sucedieron en sesiones distintas y no equivalen a un estado simultáneo. Consultar [estado observado](../estado.md) antes de operar. Los valores operativos de PIN y contraseña se conservan en el archivo privado indicado por [AGENTS.md](../../AGENTS.md#credenciales-y-recursos-privados).
 
 ## BlueOS, GPS y compases
 
@@ -42,4 +42,4 @@ Respaldos en la Pi: `/opt/kame-yolo/yolo_stream.py.bak-20261016-pre8fps`, `/etc/
 | Dos RTSP simultáneos por ZeroTier | `/cam` 3,05 Mb/s y `/yolo` 1,16 Mb/s: 4,21 Mb/s combinados. Ping medio 329 ms, pico 660 ms y 1/20 perdido. |
 | Recursos Pi durante esa carga | ~48–53 % de CPU libre, 56,5 °C, `get_throttled=0x0`; servicios de cámara activos. |
 
-Estas muestras no garantizan rendimiento sostenido. El caudal de dos vídeos estuvo cerca de la subida 4G medida y el par ZeroTier seguía en `RELAY`; no se pudo atribuir cada pérdida a un único tramo. Después se dejó un solo vídeo anunciado en Cockpit. La [guía de acceso móvil](../../mobile-access/README.md) contiene los pasos de uso y diagnóstico.
+Estas muestras no garantizan rendimiento sostenido. El caudal de dos vídeos estuvo cerca de la subida 4G medida y el par ZeroTier seguía en `RELAY`; no se pudo atribuir cada pérdida a un único tramo. Después se dejó un solo vídeo anunciado en Cockpit. La [guía de acceso móvil](../../software/conectividad/README.md) contiene los pasos de uso y diagnóstico.

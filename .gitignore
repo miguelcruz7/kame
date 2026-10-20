@@ -1,4 +1,4 @@
-# Recursos privados y resultados locales
+# Recursos privados, binarios, modelos, registros y estado de simulación
 /local/
 .env
 .env.*
@@ -14,13 +14,7 @@ __pycache__/
 .venv/
 venv/
 
-# Exclusiones de la estructura anterior durante la migración
-/sitl/bin/
-/sitl/state/
-/yolo-cockpit/wheels/
-/yolo-cockpit/model*/
-/yolo-cockpit/screenshots/
-/yolo-cockpit/diagnostics/*.txt
-/backups/*.BIN
-/*.jpg
-/*.log
+# Salidas futuras de ROS 2
+/ros2/build/
+/ros2/install/
+/ros2/log/

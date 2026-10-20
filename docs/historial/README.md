@@ -1,13 +1,23 @@
 # Historial de Kame
 
-Estos documentos registran **lo observado o cambiado en la fecha indicada**. No describen por sí solos el estado presente. La síntesis más reciente está en [estado.md](../estado.md); los procedimientos de uso están en los README de [vídeo](../../yolo-cockpit/README.md) y [acceso móvil](../../mobile-access/README.md).
+Las entradas registran lo observado o cambiado en su fecha. La síntesis más reciente del vehículo está en [estado.md](../estado.md); las operaciones están en [preparación](../preparacion.md) y en las guías de [vídeo](../../software/video/README.md) y [conectividad](../../software/conectividad/README.md).
 
 | Fecha | Registro |
 | --- | --- |
 | 2026-10-09 | [Cámara CSI e integración inicial de YOLO](2026-10-09-video.md). |
-| 2026-10-13 | [Caídas de conectividad, observación de Cockpit y GPS](2026-10-13-conectividad.md). |
-| 2026-10-16 | [GPS, vídeo a 8 FPS, brújulas y acceso 4G/ZeroTier](2026-10-16-integracion.md). |
-| 2026-10-19 | [GPS a 5 Hz y pérdida de telemetría del autopiloto](2026-10-19-gps.md). |
-| 2026-10-19 | [Orientación del Navigator previa a la recalibración](2026-10-19-orientacion-navigator.md). |
+| 2026-10-13 | [Conectividad, Cockpit y GPS](2026-10-13-conectividad.md). |
+| 2026-10-16 | [GPS, vídeo, brújulas y acceso móvil](2026-10-16-integracion.md). |
+| 2026-10-19 | [GPS y pérdida de telemetría](2026-10-19-gps.md). |
+| 2026-10-19 | [Orientación del Navigator](2026-10-19-orientacion-navigator.md). |
+| 2026-10-19 | [Diagnóstico de motores y ESC](2026-10-19-motores-esc.md). |
+| 2026-10-20 | [Reestructuración y verificaciones locales](2026-10-20-reestructuracion.md). |
 
-El registro crudo de 30 muestras de Cockpit del 13 de octubre se conserva en [`cockpit-live-observation-2026-10-13.txt`](../../yolo-cockpit/diagnostics/cockpit-live-observation-2026-10-13.txt). Los respaldos de parámetros y compases están en [`backups/`](../../backups/).
+## Archivos de evidencia
+
+Los [snapshots de parámetros](parametros/README.md) se conservan como texto revisado. Los archivos pesados o crudos están en `local/`, excluido de Git, y el [inventario de recursos](recursos.json) recoge ruta local, tamaño, SHA-256 y procedencia conocida. Los hashes identifican archivos; su recuperación depende de conservar el respaldo privado.
+
+El registro de 30 muestras de Cockpit del 13 de octubre está en `local/registros/video/cockpit-live-observation-2026-10-13.txt`. Las capturas están en `local/registros/video/screenshots/`, las dos fotos originales en `local/registros/camara/` y el DataFlash original en `local/registros/autopiloto/00000054.BIN`. Ese archivo no se atribuye a una sesión más reciente sin identificarla.
+
+## Registrar un ensayo nuevo
+
+Crear una entrada fechada con un ID común para sus archivos: objetivo y criterio de fase, fecha/zona horaria, entorno/enlace, versión Git y cambios locales, configuración antes/después, condiciones y autorización, resultado esperado/observado, métricas, evidencias recuperables con hash y estado final/reversión. Una intervención local de software se distingue de una observación del vehículo.

@@ -1,6 +1,6 @@
 # Acceso móvil a Kame con ZeroTier
 
-Guía de la instalación documentada el **2026-10-16**: módem Luat Air780EG por USB en la Raspberry Pi 5 y red privada ZeroTier. Antes de usarla con el vehículo, revisar el [último estado observado](../docs/estado.md) y comprobar el enlace en vivo.
+Guía de la instalación documentada el **2026-10-16**: módem Luat Air780EG por USB en la Raspberry Pi 5 y red privada ZeroTier. Antes de usarla con el vehículo, revisar el [último estado observado](../../docs/estado.md) y comprobar el enlace en vivo.
 
 ## Componentes y rutas
 
@@ -20,7 +20,7 @@ El temporizador de systemd se instaló en `/etc/systemd/system/kame-air780eg-unl
 
 Este temporizador automatiza **la comprobación y el desbloqueo de la SIM**. Por sí mismo no demuestra que el módem esté presente, que `eth1` tenga conectividad, que la ruta de Internet salga por el módem o que ZeroTier esté operativo. Para validar 4G tras encender, comprobar que existe el puerto AT, que la SIM queda `READY`, que `eth1` tiene la ruta esperada y que ZeroTier está `ONLINE`; `listnetworks` con estado `OK` no sustituye esas comprobaciones. La extensión ZeroTier se administra en Extensions Manager de BlueOS, que normalmente inicia las extensiones instaladas al arrancar ([documentación de BlueOS](https://blueos.cloud/docs/stable/development/extensions/)); confirmar también que la extensión no esté deshabilitada.
 
-La observación en vivo del 2026-10-19 encontró el temporizador habilitado y activo, pero el módem USB, el puerto AT y `eth1` ausentes. El registro del servicio decía `Air780EG AT port absent; nothing to do`. Por eso aún falta una prueba de arranque en frío con el módem conectado; ver el [estado observado](../docs/estado.md).
+La observación en vivo del 2026-10-19 encontró el temporizador habilitado y activo, pero el módem USB, el puerto AT y `eth1` ausentes. El registro del servicio decía `Air780EG AT port absent; nothing to do`. Por eso aún falta una prueba de arranque en frío con el módem conectado; ver el [estado observado](../../docs/estado.md).
 
 ## Conexión diaria
 
@@ -31,7 +31,7 @@ La observación en vivo del 2026-10-19 encontró el temporizador habilitado y ac
 
 La red ZeroTier es privada y ambos extremos necesitan Internet. La ruta predeterminada de la Pi debe seguir por el módem `eth1`; no usar ZeroTier como salida general. Al entrar en Cockpit por otra IP, seleccionar el mismo usuario y, si aparece conflicto de ajustes, elegir **Use the value from BlueOS** y recargar. La selección de perfil/vista puede ser local a cada navegador.
 
-El usuario, la contraseña SSH y el PIN de la SIM están en [AGENTS.md](../AGENTS.md#credenciales-documentadas). La contraseña documentada seguía siendo la predeterminada el 2026-10-16; comprobar si ha cambiado antes de usarla.
+Las credenciales están en el archivo privado `local/credenciales.md` de la raíz, excluido de Git. Leer las [reglas de acceso](../../AGENTS.md#credenciales-y-recursos-privados) y comprobar si siguen vigentes antes de usarlas.
 
 ## Comprobaciones de solo lectura
 
@@ -55,11 +55,11 @@ $ztToken = (Get-Content -Raw "$env:LOCALAPPDATA\ZeroTier\authtoken.secret").Trim
 
 Si la SIM indica `SIM PIN` tras reconectar el módem, el temporizador consulta el estado y envía el PIN solo si hace falta. Si un intento no confirma `READY`, crea `/var/lib/kame-air780eg/pin-attempt-pending` y no repite el PIN; comprobarlo manualmente antes de borrar esa marca. No hay una prueba documentada de un ciclo físico completo de desconexión y recuperación.
 
-El 2026-10-16, con Ethernet desconectado, BlueOS y SSH respondieron por ZeroTier y el PC decodificó el RTSP YOLO. El par ZeroTier figuraba en `RELAY`; dos vídeos simultáneos consumieron cerca del caudal de subida 4G observado y elevaron la latencia. Las medidas exactas y sus límites están en el [registro del 16 de octubre](../docs/historial/2026-10-16-integracion.md). Antes de operar, comprobar telemetría e imagen WebRTC **dentro de Cockpit** en el enlace real.
+El 2026-10-16, con Ethernet desconectado, BlueOS y SSH respondieron por ZeroTier y el PC decodificó el RTSP YOLO. El par ZeroTier figuraba en `RELAY`; dos vídeos simultáneos consumieron cerca del caudal de subida 4G observado y elevaron la latencia. Las medidas exactas y sus límites están en el [registro del 16 de octubre](../../docs/historial/2026-10-16-integracion.md). Antes de operar, comprobar telemetría e imagen WebRTC **dentro de Cockpit** en el enlace real.
 
 ## Reversión
 
-Antes de cambiar la red o los servicios, revisar las [reglas de actuación](../AGENTS.md). Para retirar el acceso remoto, desinstalar la extensión ZeroTier desde **Extensions Manager** de BlueOS y salir de la red privada en Windows o desinstalar ZeroTier One. Para desactivar solo el desbloqueo automático de SIM:
+Antes de cambiar la red o los servicios, revisar las [reglas de actuación](../../AGENTS.md). Para retirar el acceso remoto, desinstalar la extensión ZeroTier desde **Extensions Manager** de BlueOS y salir de la red privada en Windows o desinstalar ZeroTier One. Para desactivar solo el desbloqueo automático de SIM:
 
 ```sh
 sudo systemctl disable --now kame-air780eg-unlock.timer

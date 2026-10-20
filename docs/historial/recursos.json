@@ -1,0 +1,517 @@
+{
+  "fecha": "2026-10-20",
+  "alcance": "Inventario local, sin redistribución de binarios ni datos crudos. Recuperar desde el respaldo privado y comprobar SHA-256.",
+  "archivos": [
+    {
+      "original": "_mcm-tail.log",
+      "ruta_local": "local/registros/video/_mcm-tail.log",
+      "bytes": 989737,
+      "sha256": "a0f21d76970be413c701da8192a221040b54a733c5e1ed323cd60f5e0a4b7e90",
+      "procedencia": "Archivo preexistente preservado y cotejado con el respaldo del 2026-10-20; origen de descarga no verificado."
+    },
+    {
+      "original": "backups/00000054.BIN",
+      "ruta_local": "local/registros/autopiloto/00000054.BIN",
+      "bytes": 58159104,
+      "sha256": "740b1a86172b93bc9bb4a60edda71d58524edc18bf04c7e1fc4510063a0f6532",
+      "procedencia": "Archivo preexistente preservado y cotejado con el respaldo del 2026-10-20; origen de descarga no verificado."
+    },
+    {
+      "original": "camera-frame.jpg",
+      "ruta_local": "local/registros/camara/camera-frame.jpg",
+      "bytes": 272469,
+      "sha256": "0785aa4628611b237e536bc44f44f02f6f04a33954b2411558f4dd08e929a1e0",
+      "procedencia": "Archivo preexistente preservado y cotejado con el respaldo del 2026-10-20; origen de descarga no verificado."
+    },
+    {
+      "original": "kame_imx462_check.jpg",
+      "ruta_local": "local/registros/camara/kame_imx462_check.jpg",
+      "bytes": 280699,
+      "sha256": "76ef62c64f863cbf0a6d351a3b344822d863ebbfdfbe70f4f16a9fdb669b9257",
+      "procedencia": "Archivo preexistente preservado y cotejado con el respaldo del 2026-10-20; origen de descarga no verificado."
+    },
+    {
+      "original": "sitl/bin/ardurover",
+      "ruta_local": "local/bin/sitl/ardurover",
+      "bytes": 6664768,
+      "sha256": "cadde6012b7e756ecc8bd71a5ce155aca30c4f7c36379483c02c195f9feab317",
+      "procedencia": "Archivo preexistente preservado y cotejado con el respaldo del 2026-10-20; origen de descarga no verificado."
+    },
+    {
+      "original": "sitl/bin/Cockpit-win-x64-1.18.4.exe",
+      "ruta_local": "local/bin/sitl/Cockpit-win-x64-1.18.4.exe",
+      "bytes": 264130735,
+      "sha256": "1f690f8389b65a4d2236b77291badfe743af60e65474864937cf86d05f6ba873",
+      "procedencia": "Archivo preexistente preservado y cotejado con el respaldo del 2026-10-20; origen de descarga no verificado."
+    },
+    {
+      "original": "sitl/bin/mavlink2rest",
+      "ruta_local": "local/bin/sitl/mavlink2rest",
+      "bytes": 40703832,
+      "sha256": "33cef3a4ee0f088d756dd74baa29a2c5752daa092704e82e8e0310852327cb1f",
+      "procedencia": "Archivo preexistente preservado y cotejado con el respaldo del 2026-10-20; origen de descarga no verificado."
+    },
+    {
+      "original": "sitl/state/eeprom.bin",
+      "ruta_local": "local/estado/sitl-original/eeprom.bin",
+      "bytes": 16384,
+      "sha256": "f81eafcd60a97846a222cd16c687865735f65bfe37259c9ee2cb62ec6d9391ac",
+      "procedencia": "Archivo preexistente preservado y cotejado con el respaldo del 2026-10-20; origen de descarga no verificado."
+    },
+    {
+      "original": "yolo-cockpit/diagnostics/cockpit-live-observation-2026-10-13.txt",
+      "ruta_local": "local/registros/video/cockpit-live-observation-2026-10-13.txt",
+      "bytes": 12446,
+      "sha256": "33f9d8bd65053cd841327a09635f3d27da350b54a07e35f730b50c456125418a",
+      "procedencia": "Archivo preexistente preservado y cotejado con el respaldo del 2026-10-20; origen de descarga no verificado."
+    },
+    {
+      "original": "yolo-cockpit/model/yolo26n.pt",
+      "ruta_local": "local/modelos/model/yolo26n.pt",
+      "bytes": 5544453,
+      "sha256": "9b09cc8bf347f0fc8a5f7657480587f25db09b34bf33b0652110fb03a8ad4fef",
+      "procedencia": "Archivo preexistente preservado y cotejado con el respaldo del 2026-10-20; origen de descarga no verificado."
+    },
+    {
+      "original": "yolo-cockpit/model/yolo26n_ncnn_model/metadata.yaml",
+      "ruta_local": "local/modelos/model/yolo26n_ncnn_model/metadata.yaml",
+      "bytes": 1509,
+      "sha256": "d5584afb13e2f4df15f9c88512175f70e42672d6580c630a4cd0d094a46a2ab2",
+      "procedencia": "Archivo preexistente preservado y cotejado con el respaldo del 2026-10-20; origen de descarga no verificado."
+    },
+    {
+      "original": "yolo-cockpit/model/yolo26n_ncnn_model/model.ncnn.bin",
+      "ruta_local": "local/modelos/model/yolo26n_ncnn_model/model.ncnn.bin",
+      "bytes": 9736936,
+      "sha256": "d4d6cf5b817d1aa7acc2e6d1709b4c7190d7dd796b1925cba27c6372770ed555",
+      "procedencia": "Archivo preexistente preservado y cotejado con el respaldo del 2026-10-20; origen de descarga no verificado."
+    },
+    {
+      "original": "yolo-cockpit/model/yolo26n_ncnn_model/model.ncnn.param",
+      "ruta_local": "local/modelos/model/yolo26n_ncnn_model/model.ncnn.param",
+      "bytes": 26404,
+      "sha256": "1d224cb99489e996f5b235151e7be1fd802a74950c70d7a99147cb0a3fb46217",
+      "procedencia": "Archivo preexistente preservado y cotejado con el respaldo del 2026-10-20; origen de descarga no verificado."
+    },
+    {
+      "original": "yolo-cockpit/model/yolo26n_ncnn_model/model_ncnn.py",
+      "ruta_local": "local/modelos/model/yolo26n_ncnn_model/model_ncnn.py",
+      "bytes": 675,
+      "sha256": "8d41a440a3e5780ab63d212324276154a53a6b9c9a3fb03f3bb818ccee9b04bb",
+      "procedencia": "Archivo preexistente preservado y cotejado con el respaldo del 2026-10-20; origen de descarga no verificado."
+    },
+    {
+      "original": "yolo-cockpit/model-fp16-320/yolo26n.pt",
+      "ruta_local": "local/modelos/model-fp16-320/yolo26n.pt",
+      "bytes": 5544453,
+      "sha256": "9b09cc8bf347f0fc8a5f7657480587f25db09b34bf33b0652110fb03a8ad4fef",
+      "procedencia": "Archivo preexistente preservado y cotejado con el respaldo del 2026-10-20; origen de descarga no verificado."
+    },
+    {
+      "original": "yolo-cockpit/model-fp16-320/yolo26n_ncnn_model/metadata.yaml",
+      "ruta_local": "local/modelos/model-fp16-320/yolo26n_ncnn_model/metadata.yaml",
+      "bytes": 1507,
+      "sha256": "ad9b2a14b08f0d471373e00efc41b2b5fb4bae5bf1d435d5fa3c5861117ac3cc",
+      "procedencia": "Archivo preexistente preservado y cotejado con el respaldo del 2026-10-20; origen de descarga no verificado."
+    },
+    {
+      "original": "yolo-cockpit/model-fp16-320/yolo26n_ncnn_model/model.ncnn.bin",
+      "ruta_local": "local/modelos/model-fp16-320/yolo26n_ncnn_model/model.ncnn.bin",
+      "bytes": 4861016,
+      "sha256": "f654cc9d1663b92bc50bbe067ea65c7f680ec4b1d2b42e004bdbf5baa25c604b",
+      "procedencia": "Archivo preexistente preservado y cotejado con el respaldo del 2026-10-20; origen de descarga no verificado."
+    },
+    {
+      "original": "yolo-cockpit/model-fp16-320/yolo26n_ncnn_model/model.ncnn.param",
+      "ruta_local": "local/modelos/model-fp16-320/yolo26n_ncnn_model/model.ncnn.param",
+      "bytes": 26402,
+      "sha256": "906bfc2faab37ce4f351cd31dd3247e74e1c4c48b65fc2f133bdd477e52a9159",
+      "procedencia": "Archivo preexistente preservado y cotejado con el respaldo del 2026-10-20; origen de descarga no verificado."
+    },
+    {
+      "original": "yolo-cockpit/model-fp16-320/yolo26n_ncnn_model/model_ncnn.py",
+      "ruta_local": "local/modelos/model-fp16-320/yolo26n_ncnn_model/model_ncnn.py",
+      "bytes": 675,
+      "sha256": "fb8660304162cac1d42aa419ebebb4b7e13a50e9dacd1e75d4441ef1ed20588b",
+      "procedencia": "Archivo preexistente preservado y cotejado con el respaldo del 2026-10-20; origen de descarga no verificado."
+    },
+    {
+      "original": "yolo-cockpit/model-fp16-640/yolo26n.pt",
+      "ruta_local": "local/modelos/model-fp16-640/yolo26n.pt",
+      "bytes": 5544453,
+      "sha256": "9b09cc8bf347f0fc8a5f7657480587f25db09b34bf33b0652110fb03a8ad4fef",
+      "procedencia": "Archivo preexistente preservado y cotejado con el respaldo del 2026-10-20; origen de descarga no verificado."
+    },
+    {
+      "original": "yolo-cockpit/model-fp16-640/yolo26n_ncnn_model/metadata.yaml",
+      "ruta_local": "local/modelos/model-fp16-640/yolo26n_ncnn_model/metadata.yaml",
+      "bytes": 1507,
+      "sha256": "521b530854be283c0a1915644a22509b66dfb7533f3a3d66930cd076d6bf6ed1",
+      "procedencia": "Archivo preexistente preservado y cotejado con el respaldo del 2026-10-20; origen de descarga no verificado."
+    },
+    {
+      "original": "yolo-cockpit/model-fp16-640/yolo26n_ncnn_model/model.ncnn.bin",
+      "ruta_local": "local/modelos/model-fp16-640/yolo26n_ncnn_model/model.ncnn.bin",
+      "bytes": 4936616,
+      "sha256": "49206289446be5c9ef4293d7761da4237800cdc478d1e0aa61736abdf850f98c",
+      "procedencia": "Archivo preexistente preservado y cotejado con el respaldo del 2026-10-20; origen de descarga no verificado."
+    },
+    {
+      "original": "yolo-cockpit/model-fp16-640/yolo26n_ncnn_model/model.ncnn.param",
+      "ruta_local": "local/modelos/model-fp16-640/yolo26n_ncnn_model/model.ncnn.param",
+      "bytes": 26404,
+      "sha256": "1d224cb99489e996f5b235151e7be1fd802a74950c70d7a99147cb0a3fb46217",
+      "procedencia": "Archivo preexistente preservado y cotejado con el respaldo del 2026-10-20; origen de descarga no verificado."
+    },
+    {
+      "original": "yolo-cockpit/model-fp16-640/yolo26n_ncnn_model/model_ncnn.py",
+      "ruta_local": "local/modelos/model-fp16-640/yolo26n_ncnn_model/model_ncnn.py",
+      "bytes": 675,
+      "sha256": "8d41a440a3e5780ab63d212324276154a53a6b9c9a3fb03f3bb818ccee9b04bb",
+      "procedencia": "Archivo preexistente preservado y cotejado con el respaldo del 2026-10-20; origen de descarga no verificado."
+    },
+    {
+      "original": "yolo-cockpit/screenshots/blueos-video-manager-yolo.png",
+      "ruta_local": "local/registros/video/screenshots/blueos-video-manager-yolo.png",
+      "bytes": 95022,
+      "sha256": "3e1180f746bb32d1e5acf97944cbdbcd6e79d6d3b1b0385f566f22e63810600f",
+      "procedencia": "Archivo preexistente preservado y cotejado con el respaldo del 2026-10-20; origen de descarga no verificado."
+    },
+    {
+      "original": "yolo-cockpit/screenshots/blueos-video-streams.png",
+      "ruta_local": "local/registros/video/screenshots/blueos-video-streams.png",
+      "bytes": 484743,
+      "sha256": "c0c8a50a4ddcb1fe7ba4b81d0cd2c4cefacd78026a35922f95bbabac1a352d84",
+      "procedencia": "Archivo preexistente preservado y cotejado con el respaldo del 2026-10-20; origen de descarga no verificado."
+    },
+    {
+      "original": "yolo-cockpit/screenshots/cockpit-video-player-config-reference.png",
+      "ruta_local": "local/registros/video/screenshots/cockpit-video-player-config-reference.png",
+      "bytes": 175891,
+      "sha256": "5c1be78a4a4383b5991962f85bfa19ffd41d4b43c55c489d83d94d70243729d9",
+      "procedencia": "Archivo preexistente preservado y cotejado con el respaldo del 2026-10-20; origen de descarga no verificado."
+    },
+    {
+      "original": "yolo-cockpit/wheels/anyio-4.15.1-py3-none-any.whl",
+      "ruta_local": "local/wheels/anyio-4.15.1-py3-none-any.whl",
+      "bytes": 132079,
+      "sha256": "6152fdbbf9a77fdec97731721bebf7c4c44f7c29b424b0065826173efc7ed101",
+      "procedencia": "Archivo preexistente preservado y cotejado con el respaldo del 2026-10-20; origen de descarga no verificado."
+    },
+    {
+      "original": "yolo-cockpit/wheels/av-18.1.0-cp311-abi3-manylinux_2_28_aarch64.whl",
+      "ruta_local": "local/wheels/av-18.1.0-cp311-abi3-manylinux_2_28_aarch64.whl",
+      "bytes": 33640142,
+      "sha256": "6fc837cc51adf80331ac850779cd53b5d4c4460b0ebe9057a02a921c6736f19d",
+      "procedencia": "Archivo preexistente preservado y cotejado con el respaldo del 2026-10-20; origen de descarga no verificado."
+    },
+    {
+      "original": "yolo-cockpit/wheels/certifi-2026.7.22-py3-none-any.whl",
+      "ruta_local": "local/wheels/certifi-2026.7.22-py3-none-any.whl",
+      "bytes": 136983,
+      "sha256": "62f22742b58a1a33014a2b6b706588a8d7e2a88ae7bd1a6ebe8c992928483775",
+      "procedencia": "Archivo preexistente preservado y cotejado con el respaldo del 2026-10-20; origen de descarga no verificado."
+    },
+    {
+      "original": "yolo-cockpit/wheels/charset_normalizer-3.5.2-cp311-cp311-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl",
+      "ruta_local": "local/wheels/charset_normalizer-3.5.2-cp311-cp311-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl",
+      "bytes": 259280,
+      "sha256": "d760fe2a4d7c3b226cb9026d6a842868d52a7901bd98420e1baf14e80da85cf5",
+      "procedencia": "Archivo preexistente preservado y cotejado con el respaldo del 2026-10-20; origen de descarga no verificado."
+    },
+    {
+      "original": "yolo-cockpit/wheels/colorama-0.4.6-py2.py3-none-any.whl",
+      "ruta_local": "local/wheels/colorama-0.4.6-py2.py3-none-any.whl",
+      "bytes": 25335,
+      "sha256": "4f1d9991f5acc0ca119f9d443620b77f9d6b33703e51011c16baf57afb285fc6",
+      "procedencia": "Archivo preexistente preservado y cotejado con el respaldo del 2026-10-20; origen de descarga no verificado."
+    },
+    {
+      "original": "yolo-cockpit/wheels/contourpy-1.3.3-cp311-cp311-manylinux_2_26_aarch64.manylinux_2_28_aarch64.whl",
+      "ruta_local": "local/wheels/contourpy-1.3.3-cp311-cp311-manylinux_2_26_aarch64.manylinux_2_28_aarch64.whl",
+      "bytes": 329222,
+      "sha256": "929ddf8c4c7f348e4c0a5a3a714b5c8542ffaa8c22954862a46ca1813b667ee7",
+      "procedencia": "Archivo preexistente preservado y cotejado con el respaldo del 2026-10-20; origen de descarga no verificado."
+    },
+    {
+      "original": "yolo-cockpit/wheels/cycler-0.12.1-py3-none-any.whl",
+      "ruta_local": "local/wheels/cycler-0.12.1-py3-none-any.whl",
+      "bytes": 8321,
+      "sha256": "85cef7cff222d8644161529808465972e51340599459b8ac3ccbac5a854e0d30",
+      "procedencia": "Archivo preexistente preservado y cotejado con el respaldo del 2026-10-20; origen de descarga no verificado."
+    },
+    {
+      "original": "yolo-cockpit/wheels/filelock-4.0.12-py3-none-any.whl",
+      "ruta_local": "local/wheels/filelock-4.0.12-py3-none-any.whl",
+      "bytes": 111732,
+      "sha256": "5f17ee83ecee8a6f3e389c75822fb70a1c2f0506b99438a6dffa1d56793588c8",
+      "procedencia": "Archivo preexistente preservado y cotejado con el respaldo del 2026-10-20; origen de descarga no verificado."
+    },
+    {
+      "original": "yolo-cockpit/wheels/fonttools-4.66.1-cp311-cp311-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl",
+      "ruta_local": "local/wheels/fonttools-4.66.1-cp311-cp311-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl",
+      "bytes": 5484428,
+      "sha256": "05c0fff6b4a5d872ed89cab2c4f81060b86ace263903eb4e8d0edcac47a60dfa",
+      "procedencia": "Archivo preexistente preservado y cotejado con el respaldo del 2026-10-20; origen de descarga no verificado."
+    },
+    {
+      "original": "yolo-cockpit/wheels/fsspec-2026.9.0-py3-none-any.whl",
+      "ruta_local": "local/wheels/fsspec-2026.9.0-py3-none-any.whl",
+      "bytes": 221738,
+      "sha256": "8dd6e646e99ea382bd85f97a45e6b526a442d79423a7dc673f1e2756d05fcb5f",
+      "procedencia": "Archivo preexistente preservado y cotejado con el respaldo del 2026-10-20; origen de descarga no verificado."
+    },
+    {
+      "original": "yolo-cockpit/wheels/h11-0.16.0-py3-none-any.whl",
+      "ruta_local": "local/wheels/h11-0.16.0-py3-none-any.whl",
+      "bytes": 37515,
+      "sha256": "63cf8bbe7522de3bf65932fda1d9c2772064ffb3dae62d55932da54b31cb6c86",
+      "procedencia": "Archivo preexistente preservado y cotejado con el respaldo del 2026-10-20; origen de descarga no verificado."
+    },
+    {
+      "original": "yolo-cockpit/wheels/httpcore-1.0.9-py3-none-any.whl",
+      "ruta_local": "local/wheels/httpcore-1.0.9-py3-none-any.whl",
+      "bytes": 78784,
+      "sha256": "2d400746a40668fc9dec9810239072b40b4484b640a8c38fd654a024c7a1bf55",
+      "procedencia": "Archivo preexistente preservado y cotejado con el respaldo del 2026-10-20; origen de descarga no verificado."
+    },
+    {
+      "original": "yolo-cockpit/wheels/httpx-0.28.1-py3-none-any.whl",
+      "ruta_local": "local/wheels/httpx-0.28.1-py3-none-any.whl",
+      "bytes": 73517,
+      "sha256": "d909fcccc110f8c7faf814ca82a9a4d816bc5a6dbfea25d6591d6985b8ba59ad",
+      "procedencia": "Archivo preexistente preservado y cotejado con el respaldo del 2026-10-20; origen de descarga no verificado."
+    },
+    {
+      "original": "yolo-cockpit/wheels/idna-3.20-py3-none-any.whl",
+      "ruta_local": "local/wheels/idna-3.20-py3-none-any.whl",
+      "bytes": 69583,
+      "sha256": "ab7ae7122974553370f0bdb919e1a960b2cd1bc1ef0276416d896db81c14582c",
+      "procedencia": "Archivo preexistente preservado y cotejado con el respaldo del 2026-10-20; origen de descarga no verificado."
+    },
+    {
+      "original": "yolo-cockpit/wheels/jinja2-3.1.6-py3-none-any.whl",
+      "ruta_local": "local/wheels/jinja2-3.1.6-py3-none-any.whl",
+      "bytes": 134899,
+      "sha256": "85ece4451f492d0c13c5dd7c13a64681a86afae63a5f347908daf103ce6d2f67",
+      "procedencia": "Archivo preexistente preservado y cotejado con el respaldo del 2026-10-20; origen de descarga no verificado."
+    },
+    {
+      "original": "yolo-cockpit/wheels/kiwisolver-1.5.1-cp311-cp311-manylinux_2_24_aarch64.manylinux_2_28_aarch64.whl",
+      "ruta_local": "local/wheels/kiwisolver-1.5.1-cp311-cp311-manylinux_2_24_aarch64.manylinux_2_28_aarch64.whl",
+      "bytes": 1248975,
+      "sha256": "719a35fa1156db3640555f95ebb94f60a444e64d1c69626b0edef5df78eba225",
+      "procedencia": "Archivo preexistente preservado y cotejado con el respaldo del 2026-10-20; origen de descarga no verificado."
+    },
+    {
+      "original": "yolo-cockpit/wheels/markupsafe-3.0.4-cp311-cp311-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl",
+      "ruta_local": "local/wheels/markupsafe-3.0.4-cp311-cp311-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl",
+      "bytes": 24321,
+      "sha256": "849dd2bb0e5e4ab2b71c7191726a4a8d5aa8a610daa584728cbee0b710ddc4ef",
+      "procedencia": "Archivo preexistente preservado y cotejado con el respaldo del 2026-10-20; origen de descarga no verificado."
+    },
+    {
+      "original": "yolo-cockpit/wheels/matplotlib-3.11.2-cp311-cp311-manylinux_2_26_aarch64.manylinux_2_28_aarch64.whl",
+      "ruta_local": "local/wheels/matplotlib-3.11.2-cp311-cp311-manylinux_2_26_aarch64.manylinux_2_28_aarch64.whl",
+      "bytes": 10660507,
+      "sha256": "30ec15d7eefee71de16b7c689b42ba49715a4644650b76a6c7c70d79daf24e91",
+      "procedencia": "Archivo preexistente preservado y cotejado con el respaldo del 2026-10-20; origen de descarga no verificado."
+    },
+    {
+      "original": "yolo-cockpit/wheels/mpmath-1.3.0-py3-none-any.whl",
+      "ruta_local": "local/wheels/mpmath-1.3.0-py3-none-any.whl",
+      "bytes": 536198,
+      "sha256": "a0b2b9fe80bbcd81a6647ff13108738cfb482d481d826cc0e02f5b35e5c88d2c",
+      "procedencia": "Archivo preexistente preservado y cotejado con el respaldo del 2026-10-20; origen de descarga no verificado."
+    },
+    {
+      "original": "yolo-cockpit/wheels/ncnn-1.0.20260526-cp311-cp311-manylinux_2_24_aarch64.manylinux_2_28_aarch64.whl",
+      "ruta_local": "local/wheels/ncnn-1.0.20260526-cp311-cp311-manylinux_2_24_aarch64.manylinux_2_28_aarch64.whl",
+      "bytes": 4291082,
+      "sha256": "9ce307dac739b57a1f90005b54c53ac4397d18de9b72ef737ee1fb39c68a9ee0",
+      "procedencia": "Archivo preexistente preservado y cotejado con el respaldo del 2026-10-20; origen de descarga no verificado."
+    },
+    {
+      "original": "yolo-cockpit/wheels/networkx-3.6.1-py3-none-any.whl",
+      "ruta_local": "local/wheels/networkx-3.6.1-py3-none-any.whl",
+      "bytes": 2068504,
+      "sha256": "d47fbf302e7d9cbbb9e2555a0d267983d2aa476bac30e90dfbe5669bd57f3762",
+      "procedencia": "Archivo preexistente preservado y cotejado con el respaldo del 2026-10-20; origen de descarga no verificado."
+    },
+    {
+      "original": "yolo-cockpit/wheels/numpy-2.4.6-cp311-cp311-manylinux_2_27_aarch64.manylinux_2_28_aarch64.whl",
+      "ruta_local": "local/wheels/numpy-2.4.6-cp311-cp311-manylinux_2_27_aarch64.manylinux_2_28_aarch64.whl",
+      "bytes": 15966692,
+      "sha256": "0ab0a9c4ffb1a6d95ef519fe4247dba8eb6b18ad93999f76b7f657039acabd47",
+      "procedencia": "Archivo preexistente preservado y cotejado con el respaldo del 2026-10-20; origen de descarga no verificado."
+    },
+    {
+      "original": "yolo-cockpit/wheels/nvidia_ml_py-13.615.71-py3-none-any.whl",
+      "ruta_local": "local/wheels/nvidia_ml_py-13.615.71-py3-none-any.whl",
+      "bytes": 58132,
+      "sha256": "959bf4adf6fe1308e4bd739e722236b0d1ec8392e2cefad33ff70c311380b9b6",
+      "procedencia": "Archivo preexistente preservado y cotejado con el respaldo del 2026-10-20; origen de descarga no verificado."
+    },
+    {
+      "original": "yolo-cockpit/wheels/opencv_python-4.14.0.94-cp37-abi3-manylinux_2_28_aarch64.whl",
+      "ruta_local": "local/wheels/opencv_python-4.14.0.94-cp37-abi3-manylinux_2_28_aarch64.whl",
+      "bytes": 53432460,
+      "sha256": "add600736d0d65a39e797a9ceeb494f3cdc5736d4bd96b4f89d65a8c92451528",
+      "procedencia": "Archivo preexistente preservado y cotejado con el respaldo del 2026-10-20; origen de descarga no verificado."
+    },
+    {
+      "original": "yolo-cockpit/wheels/opencv_python_headless-4.14.0.94-cp37-abi3-manylinux_2_28_aarch64.whl",
+      "ruta_local": "local/wheels/opencv_python_headless-4.14.0.94-cp37-abi3-manylinux_2_28_aarch64.whl",
+      "bytes": 38104309,
+      "sha256": "97c6e818c6f71c0cfa214e12293b1d0266d679c38f4e086de08357c8ac6ece0d",
+      "procedencia": "Archivo preexistente preservado y cotejado con el respaldo del 2026-10-20; origen de descarga no verificado."
+    },
+    {
+      "original": "yolo-cockpit/wheels/packaging-26.3-py3-none-any.whl",
+      "ruta_local": "local/wheels/packaging-26.3-py3-none-any.whl",
+      "bytes": 129956,
+      "sha256": "d7193f7c8e4e93f444fde0262bf90af30e16fa0ad0ad44cb553c87339b23cd1c",
+      "procedencia": "Archivo preexistente preservado y cotejado con el respaldo del 2026-10-20; origen de descarga no verificado."
+    },
+    {
+      "original": "yolo-cockpit/wheels/pillow-12.3.0-cp311-cp311-manylinux_2_27_aarch64.manylinux_2_28_aarch64.whl",
+      "ruta_local": "local/wheels/pillow-12.3.0-cp311-cp311-manylinux_2_27_aarch64.manylinux_2_28_aarch64.whl",
+      "bytes": 6263814,
+      "sha256": "bcb46e2f9feff8d06323983bd83ed00c201fdcab3d74973e7072a889b3979fcd",
+      "procedencia": "Archivo preexistente preservado y cotejado con el respaldo del 2026-10-20; origen de descarga no verificado."
+    },
+    {
+      "original": "yolo-cockpit/wheels/polars-2.0.0-py3-none-any.whl",
+      "ruta_local": "local/wheels/polars-2.0.0-py3-none-any.whl",
+      "bytes": 876611,
+      "sha256": "35d62f3541b7a6d4c360a2e2f07fccc0c2bcbd33b0ea51c83a25417a47a3f3ad",
+      "procedencia": "Archivo preexistente preservado y cotejado con el respaldo del 2026-10-20; origen de descarga no verificado."
+    },
+    {
+      "original": "yolo-cockpit/wheels/polars_runtime_32-2.0.0-cp310-abi3-manylinux_2_17_aarch64.manylinux2014_aarch64.whl",
+      "ruta_local": "local/wheels/polars_runtime_32-2.0.0-cp310-abi3-manylinux_2_17_aarch64.manylinux2014_aarch64.whl",
+      "bytes": 50417889,
+      "sha256": "8b85bb42e6009acc9629afcc70a83473fd468694d6a30ffb0ab376c8dd1a0a17",
+      "procedencia": "Archivo preexistente preservado y cotejado con el respaldo del 2026-10-20; origen de descarga no verificado."
+    },
+    {
+      "original": "yolo-cockpit/wheels/portalocker-4.4.0-py3-none-any.whl",
+      "ruta_local": "local/wheels/portalocker-4.4.0-py3-none-any.whl",
+      "bytes": 129647,
+      "sha256": "a8e99ea29bfb61766ee0b4008cbaf0651e8e050f7a2485ebf54316480e99226e",
+      "procedencia": "Archivo preexistente preservado y cotejado con el respaldo del 2026-10-20; origen de descarga no verificado."
+    },
+    {
+      "original": "yolo-cockpit/wheels/psutil-7.2.2-cp36-abi3-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl",
+      "ruta_local": "local/wheels/psutil-7.2.2-cp36-abi3-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl",
+      "bytes": 156997,
+      "sha256": "b0726cecd84f9474419d67252add4ac0cd9811b04d61123054b9fb6f57df6e9e",
+      "procedencia": "Archivo preexistente preservado y cotejado con el respaldo del 2026-10-20; origen de descarga no verificado."
+    },
+    {
+      "original": "yolo-cockpit/wheels/pyparsing-3.3.3-py3-none-any.whl",
+      "ruta_local": "local/wheels/pyparsing-3.3.3-py3-none-any.whl",
+      "bytes": 126420,
+      "sha256": "ece8c00a69cf01b45d0b1dedabb469c90d8caf996d4fda40f147627a122849a4",
+      "procedencia": "Archivo preexistente preservado y cotejado con el respaldo del 2026-10-20; origen de descarga no verificado."
+    },
+    {
+      "original": "yolo-cockpit/wheels/python_dateutil-2.9.0.post0-py2.py3-none-any.whl",
+      "ruta_local": "local/wheels/python_dateutil-2.9.0.post0-py2.py3-none-any.whl",
+      "bytes": 229892,
+      "sha256": "a8b2bc7bffae282281c8140a97d3aa9c14da0b136dfe83f850eea9a5f7470427",
+      "procedencia": "Archivo preexistente preservado y cotejado con el respaldo del 2026-10-20; origen de descarga no verificado."
+    },
+    {
+      "original": "yolo-cockpit/wheels/pyyaml-6.0.3-cp311-cp311-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl",
+      "ruta_local": "local/wheels/pyyaml-6.0.3-cp311-cp311-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl",
+      "bytes": 775556,
+      "sha256": "10892704fc220243f5305762e276552a0395f7beb4dbf9b14ec8fd43b57f126c",
+      "procedencia": "Archivo preexistente preservado y cotejado con el respaldo del 2026-10-20; origen de descarga no verificado."
+    },
+    {
+      "original": "yolo-cockpit/wheels/requests-2.34.2-py3-none-any.whl",
+      "ruta_local": "local/wheels/requests-2.34.2-py3-none-any.whl",
+      "bytes": 73075,
+      "sha256": "2a0d60c172f83ac6ab31e4554906c0f3b3588d37b5cb939b1c061f4907e278e0",
+      "procedencia": "Archivo preexistente preservado y cotejado con el respaldo del 2026-10-20; origen de descarga no verificado."
+    },
+    {
+      "original": "yolo-cockpit/wheels/setuptools-84.0.0-py3-none-any.whl",
+      "ruta_local": "local/wheels/setuptools-84.0.0-py3-none-any.whl",
+      "bytes": 818216,
+      "sha256": "51a52592b3b99e102b609654876bd65f19f999935166d1352678931132b0c670",
+      "procedencia": "Archivo preexistente preservado y cotejado con el respaldo del 2026-10-20; origen de descarga no verificado."
+    },
+    {
+      "original": "yolo-cockpit/wheels/six-1.17.0-py2.py3-none-any.whl",
+      "ruta_local": "local/wheels/six-1.17.0-py2.py3-none-any.whl",
+      "bytes": 11050,
+      "sha256": "4721f391ed90541fddacab5acf947aa0d3dc7d27b2e1e8eda2be8970586c3274",
+      "procedencia": "Archivo preexistente preservado y cotejado con el respaldo del 2026-10-20; origen de descarga no verificado."
+    },
+    {
+      "original": "yolo-cockpit/wheels/sympy-1.14.0-py3-none-any.whl",
+      "ruta_local": "local/wheels/sympy-1.14.0-py3-none-any.whl",
+      "bytes": 6299353,
+      "sha256": "e091cc3e99d2141a0ba2847328f5479b05d94a6635cb96148ccb3f34671bd8f5",
+      "procedencia": "Archivo preexistente preservado y cotejado con el respaldo del 2026-10-20; origen de descarga no verificado."
+    },
+    {
+      "original": "yolo-cockpit/wheels/torch-2.14.1+cpu-cp311-cp311-manylinux_2_28_aarch64.whl",
+      "ruta_local": "local/wheels/torch-2.14.1+cpu-cp311-cp311-manylinux_2_28_aarch64.whl",
+      "bytes": 159226505,
+      "sha256": "36a03a3f87ec875ca39c8e29eccbaf0fc704605f78a3f7f179f157048c3c395e",
+      "procedencia": "Archivo preexistente preservado y cotejado con el respaldo del 2026-10-20; origen de descarga no verificado."
+    },
+    {
+      "original": "yolo-cockpit/wheels/torchvision-0.29.1+cpu-cp311-cp311-manylinux_2_28_aarch64.whl",
+      "ruta_local": "local/wheels/torchvision-0.29.1+cpu-cp311-cp311-manylinux_2_28_aarch64.whl",
+      "bytes": 2060544,
+      "sha256": "e100257aa2cd8840088d321c338f02657faf43d802d470dd8dcb7ff4003553d2",
+      "procedencia": "Archivo preexistente preservado y cotejado con el respaldo del 2026-10-20; origen de descarga no verificado."
+    },
+    {
+      "original": "yolo-cockpit/wheels/tqdm-4.70.1-py3-none-any.whl",
+      "ruta_local": "local/wheels/tqdm-4.70.1-py3-none-any.whl",
+      "bytes": 80199,
+      "sha256": "c293e525e6fef9c20e8728fd4612df02a0aa31bb5fe91ecd93e123b1b7bffa73",
+      "procedencia": "Archivo preexistente preservado y cotejado con el respaldo del 2026-10-20; origen de descarga no verificado."
+    },
+    {
+      "original": "yolo-cockpit/wheels/typing_extensions-4.16.0-py3-none-any.whl",
+      "ruta_local": "local/wheels/typing_extensions-4.16.0-py3-none-any.whl",
+      "bytes": 45571,
+      "sha256": "481caa481374e813c1b176ada14e97f1f67a4539ce9cfeb3f350d78d6370c2e8",
+      "procedencia": "Archivo preexistente preservado y cotejado con el respaldo del 2026-10-20; origen de descarga no verificado."
+    },
+    {
+      "original": "yolo-cockpit/wheels/ultralytics-8.4.174-py3-none-any.whl",
+      "ruta_local": "local/wheels/ultralytics-8.4.174-py3-none-any.whl",
+      "bytes": 1419998,
+      "sha256": "d1c4103ce7f97b895ed5d4904a0a1c13ea641cf8e1ade77e189d7bc1b777dfa5",
+      "procedencia": "Archivo preexistente preservado y cotejado con el respaldo del 2026-10-20; origen de descarga no verificado."
+    },
+    {
+      "original": "yolo-cockpit/wheels/ultralytics_platform-0.1.83-py3-none-any.whl",
+      "ruta_local": "local/wheels/ultralytics_platform-0.1.83-py3-none-any.whl",
+      "bytes": 96517,
+      "sha256": "9652b67b87d0bc6c26439c6b3e5622046225f62d9ce73aac28d1049830439d07",
+      "procedencia": "Archivo preexistente preservado y cotejado con el respaldo del 2026-10-20; origen de descarga no verificado."
+    },
+    {
+      "original": "yolo-cockpit/wheels/ultralytics_thop-2.2.2-py3-none-any.whl",
+      "ruta_local": "local/wheels/ultralytics_thop-2.2.2-py3-none-any.whl",
+      "bytes": 32582,
+      "sha256": "10ef0f4ab45261516008660619fef114cddc2b7c8383d9d3bd76c1e551208ca3",
+      "procedencia": "Archivo preexistente preservado y cotejado con el respaldo del 2026-10-20; origen de descarga no verificado."
+    },
+    {
+      "original": "yolo-cockpit/wheels/urllib3-2.8.0-py3-none-any.whl",
+      "ruta_local": "local/wheels/urllib3-2.8.0-py3-none-any.whl",
+      "bytes": 135717,
+      "sha256": "0cf3cae568d36aa9576b28dfb35f11328f1cb974ca7647d9475ebb86c75ac6e3",
+      "procedencia": "Archivo preexistente preservado y cotejado con el respaldo del 2026-10-20; origen de descarga no verificado."
+    }
+  ]
+}

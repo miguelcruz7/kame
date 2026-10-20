@@ -1,5 +1,6 @@
 """Create two short Cockpit mission drafts around Kame's SITL start point."""
 
+import argparse
 import json
 import math
 import uuid
@@ -8,7 +9,7 @@ from pathlib import Path
 
 ORIGIN = (43.340080, -8.384526)
 EARTH_RADIUS_M = 6_378_137.0
-DESTINATION = Path(__file__).parent / "misiones"
+DESTINATION = Path(__file__).resolve().parent / "cockpit"
 
 
 def offset(east_m: float, north_m: float) -> list[float]:
@@ -37,7 +38,7 @@ def waypoint(mission: str, index: int, east_m: float, north_m: float) -> dict:
     }
 
 
-def save_mission(filename: str, points: list[tuple[float, float]]) -> None:
+def save_mission(filename: str, points: list[tuple[float, float]], destination: Path) -> None:
     mission = {
         "version": 0,
         "settings": {
@@ -50,9 +51,18 @@ def save_mission(filename: str, points: list[tuple[float, float]]) -> None:
         "waypoints": [waypoint(filename, index, *point) for index, point in enumerate(points, start=1)],
         "surveys": [],
     }
-    DESTINATION.mkdir(parents=True, exist_ok=True)
-    (DESTINATION / filename).write_text(json.dumps(mission, indent=2) + "\n", encoding="utf-8")
+    destination.mkdir(parents=True, exist_ok=True)
+    (destination / filename).write_text(json.dumps(mission, indent=2) + "\n", encoding="utf-8", newline="\n")
 
 
-save_mission("01_ida_y_vuelta.cmp", [(-40, 0), (-80, 0), (0, 0)])
-save_mission("02_triangulo.cmp", [(-40, 0), (-40, -40), (0, 0)])
+def main() -> None:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--output-dir", type=Path, default=DESTINATION,
+                        help="Destination directory (default: misiones/cockpit)")
+    args = parser.parse_args()
+    save_mission("01_ida_y_vuelta.cmp", [(-40, 0), (-80, 0), (0, 0)], args.output_dir)
+    save_mission("02_triangulo.cmp", [(-40, 0), (-40, -40), (0, 0)], args.output_dir)
+
+
+if __name__ == "__main__":
+    main()
