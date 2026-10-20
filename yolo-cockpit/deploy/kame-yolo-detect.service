@@ -1,0 +1,33 @@
+[Unit]
+Description=YOLO26n NCNN person and boat annotations for Cockpit
+Wants=kame-yolo-mediamtx.service
+After=network-online.target kame-yolo-mediamtx.service kame-mediamtx.service
+
+[Service]
+Type=simple
+User=pi
+Group=pi
+WorkingDirectory=/home/pi/kame-yolo-offline
+Environment=YOLO_CONFIG_DIR=/home/pi/kame-yolo-offline/config
+Environment=YOLO_MODEL=/home/pi/kame-yolo-offline/model-fp16-320/yolo26n_ncnn_model
+Environment=YOLO_IMGSZ=320
+Environment=YOLO_OUTPUT_FPS=8
+Environment=YOLO_INFER_FPS=8
+Environment=YOLO_HOLD_FRAMES=2
+Environment=YOLO_NCNN_THREADS=1
+Environment=YOLO_OUTPUT_WIDTH=960
+Environment=YOLO_OUTPUT_HEIGHT=540
+Environment=YOLO_SOURCE=rtsp://127.0.0.1:8554/cam
+Environment=YOLO_DESTINATION=rtsp://127.0.0.1:8556/yolo
+Environment=OMP_NUM_THREADS=1
+Environment=OPENBLAS_NUM_THREADS=1
+Environment=OPENCV_OPENCL_RUNTIME=disabled
+ExecStart=/home/pi/kame-yolo-offline/venv/bin/python /opt/kame-yolo/yolo_stream.py
+Restart=on-failure
+RestartSec=5
+Nice=15
+CPUQuota=150%
+MemoryMax=4G
+
+[Install]
+WantedBy=multi-user.target

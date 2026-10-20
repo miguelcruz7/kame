@@ -1,0 +1,333 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <title>Navigator · actitud e IMU</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #081521;
+      --surface: #102536;
+      --surface-2: #142d40;
+      --text: #e5f1f7;
+      --muted: #a2b8c7;
+      --line: #284659;
+      --blue: #52c4ed;
+      --orange: #ffbf69;
+      --green: #69daa0;
+      --red: #ff817c;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--bg); color: var(--text); font: 15px/1.45 system-ui, sans-serif; }
+    main { max-width: 1180px; margin: 0 auto; padding: 20px clamp(14px, 3vw, 30px) 32px; }
+    header { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-bottom: 14px; }
+    h1 { margin: 0; font-size: 1.35rem; font-weight: 600; letter-spacing: .01em; }
+    .sub { color: var(--muted); margin: 4px 0 0; font-size: .9rem; }
+    .source-control { display: flex; align-items: center; gap: 9px; color: var(--muted); }
+    select { color: var(--text); background: var(--surface-2); border: 1px solid var(--line); border-radius: 8px; padding: 8px 34px 8px 10px; font: inherit; }
+    .layout { display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(265px, .9fr); gap: 14px; align-items: stretch; }
+    .panel { min-width: 0; background: var(--surface); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; }
+    .scene-panel { display: flex; flex-direction: column; }
+    .scene-bar { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 12px 15px 0; color: var(--muted); font-size: .86rem; }
+    .badge { display: inline-flex; align-items: center; gap: 7px; white-space: nowrap; }
+    .dot { width: 9px; height: 9px; border-radius: 50%; background: var(--orange); box-shadow: 0 0 11px color-mix(in srgb, var(--orange) 45%, transparent); }
+    .dot.online { background: var(--green); box-shadow: 0 0 11px color-mix(in srgb, var(--green) 50%, transparent); }
+    .dot.offline { background: var(--red); box-shadow: 0 0 11px color-mix(in srgb, var(--red) 48%, transparent); }
+    canvas { display: block; width: 100%; aspect-ratio: 1.63; min-height: 270px; max-height: 500px; }
+    .attitude-readout { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--line); border-top: 1px solid var(--line); }
+    .attitude-readout div { background: var(--surface-2); padding: 10px 12px; }
+    .label { display: block; color: var(--muted); font-size: .78rem; }
+    .value { font-size: 1.08rem; font-variant-numeric: tabular-nums; }
+    .side { display: flex; flex-direction: column; }
+    .side h2 { margin: 0; padding: 13px 15px; border-bottom: 1px solid var(--line); font-size: .95rem; font-weight: 600; }
+    .metric { display: flex; justify-content: space-between; gap: 14px; padding: 10px 15px; border-bottom: 1px solid color-mix(in srgb, var(--line) 60%, transparent); }
+    .metric:last-of-type { border-bottom: 0; }
+    .metric .name { color: var(--muted); }
+    .metric .number { text-align: right; font-variant-numeric: tabular-nums; }
+    .side-note { margin: auto 15px 14px; padding-top: 12px; color: var(--muted); font-size: .82rem; }
+    .warning { color: var(--orange); }
+    .good { color: var(--green); }
+    .bad { color: var(--red); }
+    footer { color: var(--muted); font-size: .84rem; margin-top: 12px; }
+    code { color: var(--blue); }
+    @media (max-width: 760px) {
+      .layout { grid-template-columns: 1fr; }
+      canvas { min-height: 230px; }
+      .side-note { margin-top: 6px; }
+    }
+    @media (max-width: 390px) {
+      main { padding: 14px 10px 24px; }
+      .attitude-readout div { padding: 9px 8px; }
+      .value { font-size: .98rem; }
+      .scene-bar { padding-inline: 10px; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <div>
+        <h1>Navigator · actitud e IMU</h1>
+        <p class="sub">Figura 3D sincronizada con ATTITUDE del autopiloto</p>
+      </div>
+      <label class="source-control" for="source">Enlace BlueOS
+        <select id="source" aria-label="Enlace de BlueOS">
+          <option value="wifi">Wi‑Fi · 192.168.42.1</option>
+          <option value="ethernet">Ethernet · 192.168.2.2</option>
+        </select>
+      </label>
+    </header>
+
+    <div class="layout">
+      <section class="panel scene-panel" aria-label="Orientación tridimensional del Kame">
+        <div class="scene-bar">
+          <span id="connection" class="badge"><i id="dot" class="dot" aria-hidden="true"></i><span id="connection-text" aria-live="polite">Conectando…</span></span>
+          <span id="arming">Estado de armado: —</span>
+        </div>
+        <canvas id="scene" role="img" aria-label="Modelo 3D que sigue roll, pitch y yaw reales del autopiloto"></canvas>
+        <div class="attitude-readout" aria-live="polite">
+          <div><span class="label">Roll</span><span class="value" id="roll">—</span></div>
+          <div><span class="label">Pitch</span><span class="value" id="pitch">—</span></div>
+          <div><span class="label">Yaw</span><span class="value" id="yaw">—</span></div>
+        </div>
+      </section>
+
+      <section class="panel side" aria-label="Indicadores de IMU y estimador">
+        <h2>Sensores y estimador</h2>
+        <div class="metric"><span class="name">Frecuencia ATTITUDE</span><span class="number" id="frequency">—</span></div>
+        <div class="metric"><span class="name">Acelerómetro X / Y / Z</span><span class="number" id="accel">—</span></div>
+        <div class="metric"><span class="name">Giroscopio X / Y / Z</span><span class="number" id="gyro">—</span></div>
+        <div class="metric"><span class="name">Vibración X / Y / Z</span><span class="number" id="vibration">—</span></div>
+        <div class="metric"><span class="name">Clipping IMU</span><span class="number" id="clips">—</span></div>
+        <div class="metric"><span class="name">EKF · actitud</span><span class="number" id="ekf">—</span></div>
+        <div class="metric"><span class="name">Varianza brújula</span><span class="number" id="compass">—</span></div>
+        <div class="metric"><span class="name">GPS</span><span class="number" id="gps">—</span></div>
+        <p class="side-note">El modelo solo lee MAVLink por BlueOS. Los datos de actitud y vibración ayudan a inspeccionar la estimación; no sustituyen una calibración ni prueban por sí solos que todos los sensores estén sanos.</p>
+      </section>
+    </div>
+
+    <footer>Solo lectura · no envía comandos al autopiloto. Si BlueOS no responde, el visor reintenta y marca la telemetría como desconectada.</footer>
+  </main>
+
+  <script>
+    const $ = (id) => document.getElementById(id);
+    const canvas = $('scene');
+    const ctx = canvas.getContext('2d');
+    const source = $('source');
+    let latest = null;
+    let lastFrameTime = 0;
+    let smooth = { roll: 0, pitch: 0, yaw: 0 };
+
+    function show(id, value) { $(id).textContent = value; }
+    function fixed(value, digits = 1) { return Number.isFinite(value) ? value.toFixed(digits) : '—'; }
+    function degrees(rad) { return Number.isFinite(rad) ? rad * 180 / Math.PI : null; }
+    function formatVector(values, digits = 2) {
+      return values && values.every(Number.isFinite) ? values.map((v) => v.toFixed(digits)).join(' / ') : '—';
+    }
+
+    function applyState(data) {
+      latest = data;
+      if (source.value !== data.sourceName) source.value = data.sourceName;
+      const dot = $('dot');
+      dot.className = `dot ${data.online ? 'online' : 'offline'}`;
+      const freq = data.attitude?.frequency;
+      show('connection-text', data.online ? `BlueOS conectado · ${data.sourceName === 'wifi' ? 'Wi‑Fi' : 'Ethernet'}${Number.isFinite(freq) ? ` · ${freq.toFixed(1)} Hz` : ''}` : (data.error || 'Sin telemetría'));
+      show('arming', data.heartbeat ? `Autopiloto: ${data.heartbeat.armed ? 'ARMADO' : 'desarmado'}` : 'Estado de armado: —');
+      const a = data.attitude;
+      show('roll', a ? `${fixed(degrees(a.roll))}°` : '—');
+      show('pitch', a ? `${fixed(degrees(a.pitch))}°` : '—');
+      show('yaw', a ? `${fixed(degrees(a.yaw))}°` : '—');
+      show('frequency', Number.isFinite(freq) ? `${freq.toFixed(1)} Hz` : '—');
+      show('accel', formatVector(data.rawImu?.accel));
+      show('gyro', data.rawImu?.gyro ? `${formatVector(data.rawImu.gyro)} °/s` : '—');
+      show('vibration', data.vibration ? `${formatVector(data.vibration.xyz)} m/s²` : '—');
+      show('clips', data.vibration ? data.vibration.clips.reduce((sum, value) => sum + value, 0).toLocaleString('es-ES') : '—');
+      const attitudeOkay = data.ekf ? Boolean(data.ekf.flags & 1) : null;
+      show('ekf', attitudeOkay === null ? '—' : (attitudeOkay ? 'Actitud estimada' : 'Sin flag de actitud'));
+      $('ekf').className = `number ${attitudeOkay === null ? '' : (attitudeOkay ? 'good' : 'warning')}`;
+      show('compass', Number.isFinite(data.ekf?.compassVariance) ? data.ekf.compassVariance.toFixed(3) : '—');
+      const gps = data.gps;
+      show('gps', gps ? `${String(gps.fix || '').replace('GPS_FIX_TYPE_', '')} · ${gps.satellites} sat` : '—');
+      if (!data.online) $('arming').className = 'warning';
+      else $('arming').className = data.heartbeat?.armed ? 'warning' : '';
+    }
+
+    source.addEventListener('change', async () => {
+      try {
+        const response = await fetch('/api/source', {
+          method: 'POST',
+          headers: { 'content-type': 'application/json' },
+          body: JSON.stringify({ source: source.value }),
+        });
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      } catch {
+        show('connection-text', 'No se pudo cambiar de enlace');
+      }
+    });
+
+    const events = new EventSource('/events');
+    events.onmessage = (event) => {
+      try { applyState(JSON.parse(event.data)); } catch { show('connection-text', 'Telemetría no válida'); }
+    };
+    events.onerror = () => {
+      $('dot').className = 'dot offline';
+      show('connection-text', 'HTTP local sin conexión');
+    };
+
+    const sub = (a, b) => [a[0] - b[0], a[1] - b[1], a[2] - b[2]];
+    const dot = (a, b) => a[0] * b[0] + a[1] * b[1] + a[2] * b[2];
+    const cross = (a, b) => [a[1] * b[2] - a[2] * b[1], a[2] * b[0] - a[0] * b[2], a[0] * b[1] - a[1] * b[0]];
+    const normalize = (v) => { const n = Math.hypot(...v) || 1; return v.map((x) => x / n); };
+
+    function rotate(point, roll, pitch, yaw) {
+      const cr = Math.cos(roll), sr = Math.sin(roll);
+      const cp = Math.cos(pitch), sp = Math.sin(pitch);
+      const cy = Math.cos(yaw), sy = Math.sin(yaw);
+      const [x, y, z] = point;
+      const y1 = y * cr - z * sr;
+      const z1 = y * sr + z * cr;
+      const x2 = x * cp + z1 * sp;
+      const z2 = -x * sp + z1 * cp;
+      return [x2 * cy - y1 * sy, x2 * sy + y1 * cy, z2];
+    }
+
+    const camera = [6.2, -8.5, -6.1];
+    const forward = normalize(sub([0, 0, 0], camera));
+    const right = normalize(cross(forward, [0, 0, -1]));
+    const up = cross(right, forward);
+    function project(point, width, height) {
+      const rel = sub(point, camera);
+      const depth = dot(rel, forward);
+      if (depth <= 0.1) return null;
+      const scale = Math.min(width, height) * 0.95 / depth;
+      return [width * 0.5 + dot(rel, right) * scale, height * 0.55 - dot(rel, up) * scale, depth];
+    }
+
+    const hull = [
+      [2.2, 0, 0.05], [1.25, -0.78, 0.05], [-1.9, -0.78, 0.05],
+      [-2.05, -0.48, 0.05], [-2.05, 0.48, 0.05], [-1.9, 0.78, 0.05],
+      [1.25, 0.78, 0.05], [1.55, 0, 0.5], [-1.65, 0, 0.48],
+    ];
+    const hullFaces = [
+      { ids: [0, 1, 2, 3, 4, 5, 6], color: '#2799c4' },
+      { ids: [0, 1, 7], color: '#145b7d' },
+      { ids: [1, 2, 8, 7], color: '#176d91' },
+      { ids: [2, 3, 8], color: '#135c7e' },
+      { ids: [3, 4, 8], color: '#174f70' },
+      { ids: [4, 5, 8], color: '#176d91' },
+      { ids: [5, 6, 7, 8], color: '#135c7e' },
+      { ids: [6, 0, 7], color: '#207da4' },
+    ];
+    const cabin = [
+      [-0.65, -0.43, -0.03], [0.42, -0.43, -0.03], [0.42, 0.43, -0.03], [-0.65, 0.43, -0.03],
+      [-0.53, -0.34, -0.78], [0.28, -0.34, -0.78], [0.28, 0.34, -0.78], [-0.53, 0.34, -0.78],
+      [-0.5, -0.3, -1.05], [0.23, -0.3, -1.05], [0.23, 0.3, -1.05], [-0.5, 0.3, -1.05],
+    ];
+    const cabinFaces = [
+      { ids: [0, 1, 5, 4], color: '#70b9d4' }, { ids: [1, 2, 6, 5], color: '#4b8fab' },
+      { ids: [2, 3, 7, 6], color: '#387c9b' }, { ids: [3, 0, 4, 7], color: '#579db9' },
+      { ids: [4, 5, 9, 8], color: '#b8d9e6' }, { ids: [5, 6, 10, 9], color: '#83b8cc' },
+      { ids: [6, 7, 11, 10], color: '#6fa8bf' }, { ids: [7, 4, 8, 11], color: '#a5ccd9' },
+      { ids: [8, 9, 10, 11], color: '#d8e9ee' },
+    ];
+
+    function drawLine(a, b, color, width = 1) {
+      const p1 = project(a, canvas.clientWidth, canvas.clientHeight);
+      const p2 = project(b, canvas.clientWidth, canvas.clientHeight);
+      if (!p1 || !p2) return;
+      ctx.strokeStyle = color;
+      ctx.lineWidth = width;
+      ctx.beginPath(); ctx.moveTo(p1[0], p1[1]); ctx.lineTo(p2[0], p2[1]); ctx.stroke();
+    }
+
+    function draw() {
+      const width = canvas.clientWidth || 600;
+      const height = canvas.clientHeight || 360;
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      const pixelWidth = Math.round(width * dpr);
+      const pixelHeight = Math.round(height * dpr);
+      if (canvas.width !== pixelWidth || canvas.height !== pixelHeight) {
+        canvas.width = pixelWidth; canvas.height = pixelHeight;
+      }
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      ctx.clearRect(0, 0, width, height);
+
+      const sky = ctx.createLinearGradient(0, 0, 0, height);
+      sky.addColorStop(0, '#0e2435'); sky.addColorStop(1, '#132d3e');
+      ctx.fillStyle = sky; ctx.fillRect(0, 0, width, height);
+      const seaLine = height * 0.7;
+      const sea = ctx.createLinearGradient(0, seaLine, 0, height);
+      sea.addColorStop(0, '#17465e'); sea.addColorStop(1, '#0b2435');
+      ctx.fillStyle = sea; ctx.fillRect(0, seaLine, width, height - seaLine);
+      ctx.strokeStyle = 'rgba(130,190,210,.18)'; ctx.lineWidth = 1;
+      ctx.beginPath(); ctx.moveTo(0, seaLine); ctx.lineTo(width, seaLine); ctx.stroke();
+
+      const rollTarget = latest?.attitude?.roll ?? 0;
+      const pitchTarget = latest?.attitude?.pitch ?? 0;
+      const yawTarget = latest?.attitude?.yaw ?? 0;
+      const now = performance.now();
+      const blend = lastFrameTime ? Math.min(1, (now - lastFrameTime) / 70) : 1;
+      lastFrameTime = now;
+      smooth.roll += (rollTarget - smooth.roll) * blend;
+      smooth.pitch += (pitchTarget - smooth.pitch) * blend;
+      let yawDelta = yawTarget - smooth.yaw;
+      while (yawDelta > Math.PI) yawDelta -= Math.PI * 2;
+      while (yawDelta < -Math.PI) yawDelta += Math.PI * 2;
+      smooth.yaw += yawDelta * blend;
+
+      const roll = smooth.roll, pitch = smooth.pitch, yaw = smooth.yaw;
+      // Sea reference grid uses the Navigator's NED frame (positive Z points down).
+      for (let x = -4; x <= 4; x += 1) drawLine([x, -4, 0.8], [x, 4, 0.8], 'rgba(138,204,222,.12)');
+      for (let y = -4; y <= 4; y += 1) drawLine([-4, y, 0.8], [4, y, 0.8], 'rgba(138,204,222,.12)');
+
+      const transform = (p) => rotate(p, roll, pitch, yaw);
+      const worldHull = hull.map(transform);
+      const faces = hullFaces.map((face) => ({ ...face, points: face.ids.map((id) => project(worldHull[id], width, height)) }));
+      faces.sort((a, b) => {
+        const depth = (face) => face.points.reduce((sum, point) => sum + (point?.[2] || 0), 0) / face.points.length;
+        return depth(b) - depth(a);
+      });
+      for (const face of faces) {
+        if (face.points.some((p) => !p)) continue;
+        ctx.beginPath(); ctx.moveTo(face.points[0][0], face.points[0][1]);
+        for (const point of face.points.slice(1)) ctx.lineTo(point[0], point[1]);
+        ctx.closePath(); ctx.fillStyle = face.color; ctx.fill();
+        ctx.strokeStyle = 'rgba(194,230,240,.52)'; ctx.lineWidth = 1; ctx.stroke();
+      }
+      const worldCabin = cabin.map(transform);
+      const cabinDraw = cabinFaces.map((face) => ({ ...face, points: face.ids.map((id) => project(worldCabin[id], width, height)) }));
+      cabinDraw.sort((a, b) => {
+        const depth = (face) => face.points.reduce((sum, point) => sum + (point?.[2] || 0), 0) / face.points.length;
+        return depth(b) - depth(a);
+      });
+      for (const face of cabinDraw) {
+        if (face.points.some((p) => !p)) continue;
+        ctx.beginPath(); ctx.moveTo(face.points[0][0], face.points[0][1]);
+        for (const point of face.points.slice(1)) ctx.lineTo(point[0], point[1]);
+        ctx.closePath(); ctx.fillStyle = face.color; ctx.fill();
+        ctx.strokeStyle = 'rgba(219,240,244,.55)'; ctx.lineWidth = 1; ctx.stroke();
+      }
+
+      const origin = transform([0, 0, -1.1]);
+      const axes = [
+        { end: transform([1.2, 0, -1.1]), color: '#ffbf69', label: 'X' },
+        { end: transform([0, 1.2, -1.1]), color: '#69daa0', label: 'Y' },
+        { end: transform([0, 0, 0.2]), color: '#77aaff', label: 'Z' },
+      ];
+      for (const axis of axes) {
+        const a = project(origin, width, height), b = project(axis.end, width, height);
+        if (!a || !b) continue;
+        ctx.strokeStyle = axis.color; ctx.lineWidth = 2.3;
+        ctx.beginPath(); ctx.moveTo(a[0], a[1]); ctx.lineTo(b[0], b[1]); ctx.stroke();
+        ctx.fillStyle = axis.color; ctx.font = '12px system-ui'; ctx.fillText(axis.label, b[0] + 4, b[1] - 4);
+      }
+      ctx.fillStyle = 'rgba(231,243,248,.8)'; ctx.font = '12px system-ui';
+      ctx.fillText('NED · X proa · Y estribor · Z abajo', 14, height - 14);
+      requestAnimationFrame(draw);
+    }
+    requestAnimationFrame(draw);
+  </script>
+</body>
+</html>

@@ -1,0 +1,6 @@
+[Unit]
+Description=Unlock Kame Air780EG SIM when required
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/python3 /usr/local/sbin/kame-air780eg-unlock.py

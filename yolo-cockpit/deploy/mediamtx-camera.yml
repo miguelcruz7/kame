@@ -1,0 +1,24 @@
+logLevel: info
+rtsp: true
+rtspAddress: 0.0.0.0:8554
+rtspTransports: [tcp]
+rtmp: false
+hls: false
+webrtc: false
+srt: false
+moq: false
+api: false
+metrics: false
+pprof: false
+playback: false
+paths:
+  cam:
+    source: rpiCamera
+    sourceOnDemand: true
+    rpiCameraCamID: 0
+    rpiCameraWidth: 1920
+    rpiCameraHeight: 1080
+    rpiCameraFPS: 20
+    rpiCameraCodec: softwareH264
+    rpiCameraBitrate: 3500000
+    rpiCameraIDRPeriod: 20

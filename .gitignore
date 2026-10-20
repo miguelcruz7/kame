@@ -1,0 +1,26 @@
+# Recursos privados y resultados locales
+/local/
+.env
+.env.*
+!.env.example
+*.key
+*.pem
+authtoken.secret
+identity.secret
+
+# Cachés y entornos
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Exclusiones de la estructura anterior durante la migración
+/sitl/bin/
+/sitl/state/
+/yolo-cockpit/wheels/
+/yolo-cockpit/model*/
+/yolo-cockpit/screenshots/
+/yolo-cockpit/diagnostics/*.txt
+/backups/*.BIN
+/*.jpg
+/*.log

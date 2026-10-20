@@ -1,0 +1,5 @@
+# Ajustes exclusivos del SITL local para las primeras misiones de Kame.
+CRUISE_SPEED 1.2
+WP_SPEED 1.2
+SIM_WIND_SPD 0
+SIM_WAVE_ENABLE 0

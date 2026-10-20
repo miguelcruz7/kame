@@ -1,0 +1,73 @@
+{
+  "version": 0,
+  "settings": {
+    "mapCenter": [
+      43.34008,
+      -8.384526
+    ],
+    "zoom": 18,
+    "currentWaypointAltitude": 0,
+    "currentWaypointAltitudeRefType": "Relative to home",
+    "defaultCruiseSpeed": 1.2
+  },
+  "waypoints": [
+    {
+      "id": "89240268-58f5-5279-b6d1-1bec34653842",
+      "coordinates": [
+        43.34008,
+        -8.38502006
+      ],
+      "altitude": 0,
+      "altitudeReferenceType": "Relative to home",
+      "commands": [
+        {
+          "type": "MAVLINK_NAV_COMMAND",
+          "command": 16,
+          "param1": 0,
+          "param2": 5,
+          "param3": 0,
+          "param4": 999
+        }
+      ]
+    },
+    {
+      "id": "283717b7-c6ae-5049-a07c-48a8fe1805d5",
+      "coordinates": [
+        43.33972067,
+        -8.38502006
+      ],
+      "altitude": 0,
+      "altitudeReferenceType": "Relative to home",
+      "commands": [
+        {
+          "type": "MAVLINK_NAV_COMMAND",
+          "command": 16,
+          "param1": 0,
+          "param2": 5,
+          "param3": 0,
+          "param4": 999
+        }
+      ]
+    },
+    {
+      "id": "3a497d90-aef9-5f8e-a627-04082cc1ec2d",
+      "coordinates": [
+        43.34008,
+        -8.384526
+      ],
+      "altitude": 0,
+      "altitudeReferenceType": "Relative to home",
+      "commands": [
+        {
+          "type": "MAVLINK_NAV_COMMAND",
+          "command": 16,
+          "param1": 0,
+          "param2": 5,
+          "param3": 0,
+          "param4": 999
+        }
+      ]
+    }
+  ],
+  "surveys": []
+}

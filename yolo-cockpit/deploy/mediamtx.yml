@@ -1,0 +1,13 @@
+logLevel: info
+rtsp: yes
+rtspAddress: 0.0.0.0:8556
+rtspTransports: [tcp]
+rtmp: no
+hls: no
+webrtc: no
+srt: no
+
+paths:
+  yolo:
+    source: publisher
+    overridePublisher: yes

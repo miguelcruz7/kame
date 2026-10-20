@@ -1,0 +1,11 @@
+[Unit]
+Description=Check Kame Air780EG SIM after boot and USB reconnection
+
+[Timer]
+OnBootSec=30s
+OnUnitInactiveSec=1min
+AccuracySec=10s
+Unit=kame-air780eg-unlock.service
+
+[Install]
+WantedBy=timers.target
