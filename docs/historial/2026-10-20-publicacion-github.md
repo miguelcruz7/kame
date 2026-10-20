@@ -23,4 +23,8 @@ Ejecutar `python -X utf8 .github/checks/check_repository.py` desde la raíz. Com
 
 Antes del envío pasaron las comprobaciones portátiles en Windows: 55 archivos, 137 enlaces/anclas, sintaxis/configuración, patrones de secretos, misiones equivalentes y página/API/SSE del visor simulado. También pasó `git diff --check`.
 
-El workflow de [GitHub Actions](https://github.com/miguelcruz7/kame/actions/workflows/checks.yml) ejecuta estas comprobaciones en Ubuntu al enviar cambios o abrir una PR. Su primer resultado y la comprobación del acceso público se registrarán al completar la publicación.
+El workflow de [GitHub Actions](https://github.com/miguelcruz7/kame/actions/workflows/checks.yml) ejecuta estas comprobaciones en Ubuntu al enviar cambios o abrir una PR. La [primera ejecución](https://github.com/miguelcruz7/kame/actions/runs/39412961075), sobre `63b88fe`, terminó correctamente en Ubuntu 24.04.
+
+También se verificó sin autenticación que el repositorio es público, que `main` es la rama predeterminada y que README, AGENTS, plan y estado responden HTTP 200 con el contenido publicado. Un clon público nuevo, sin credenciales ni carpeta `local/`, pasó las comprobaciones portátiles completas.
+
+La revisión final de los siete commits enviados inicialmente cubrió 93 blobs: sin archivos privados ni pesados, sin coincidencias con las dos credenciales conocidas y sin los tres identificadores privados de red. La copia de trabajo quedó sincronizada con `origin/main`. Estos resultados no sustituyen los ensayos pendientes del vehículo.
