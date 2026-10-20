@@ -11,6 +11,7 @@ Las entradas registran lo observado o cambiado en su fecha. La síntesis más re
 | 2026-10-19 | [Orientación del Navigator](2026-10-19-orientacion-navigator.md). |
 | 2026-10-19 | [Diagnóstico de motores y ESC](2026-10-19-motores-esc.md). |
 | 2026-10-20 | [Reestructuración y verificaciones locales](2026-10-20-reestructuracion.md). |
+| 2026-10-20 | [Comunicación del usuario: MMC5983 desconectada y AK09915 como única brújula](2026-10-20-brujula-mmc5983.md). |
 
 ## Archivos de evidencia
 

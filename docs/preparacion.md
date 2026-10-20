@@ -24,7 +24,9 @@ Si desaparece ArduPilot, recoger procesos y registros antes de atribuir causa. E
 
 Confirmar proa, ejes y montaje. La corrección documentada del Navigator es `Custom 1`, pitch −13°, con buen acuerdo estático; falta validar una calibración completa con esa orientación. Consultar la [secuencia y fuentes de orientación](historial/2026-10-19-orientacion-navigator.md).
 
-Con motores aislados y vehículo desarmado, seguir el procedimiento oficial de acelerómetros y comprobar la respuesta al movimiento. Verificar rumbo, calibración de brújulas e interferencias de alimentación/propulsión. El prearm saludable posterior a un aviso no certifica individualmente las calibraciones.
+Según la [actualización del usuario recibida el 2026-10-20](historial/2026-10-20-brujula-mmc5983.md), la MMC5983 se desconectó por incompatibilidad con la Raspberry Pi 5 en esta instalación y quedó únicamente la AK09915. Confirmar mediante lecturas que ArduPilot utiliza esa única brújula; no restaurar automáticamente la selección doble de los snapshots anteriores.
+
+Con motores aislados y vehículo desarmado, seguir el procedimiento oficial de acelerómetros y comprobar la respuesta al movimiento. Verificar calibración y rumbo de la AK09915 e interferencias de alimentación/propulsión. El prearm saludable posterior a un aviso no certifica las calibraciones ni permite deducir que la desconexión resolviera el aviso anterior.
 
 Validar fix, satélites y posición GPS frente al lugar físico en cada sesión de navegación. La configuración más reciente documentada usa u-blox; NMEA fue el ajuste anterior del 16 de octubre. DGPS no demuestra RTK fijo; no hay una cadena RTCM/NTRIP validada en estos registros.
 
