@@ -1,0 +1,16 @@
+diff --git a/libraries/AP_HAL_Linux/HAL_Linux_Class.cpp b/libraries/AP_HAL_Linux/HAL_Linux_Class.cpp
+--- a/libraries/AP_HAL_Linux/HAL_Linux_Class.cpp
++++ b/libraries/AP_HAL_Linux/HAL_Linux_Class.cpp
+@@ -210,7 +210,11 @@ static RCOutput_PCA9685 rcoutDriver(i2c_mgr_instance.get_device_ptr(1, PCA9685_QUATEN
+ #elif CONFIG_HAL_BOARD_SUBTYPE == HAL_BOARD_SUBTYPE_LINUX_DARK
+ static RCOutput_PCA9685 rcoutDriver(i2c_mgr_instance.get_device_ptr(1, PCA9685_QUINARY_ADDRESS), 0, 0, RPI_GPIO_<27>());
+ #elif CONFIG_HAL_BOARD_SUBTYPE == HAL_BOARD_SUBTYPE_LINUX_NAVIGATOR
+-static RCOutput_PCA9685 rcoutDriver(i2c_mgr_instance.get_device_ptr(4, PCA9685_PRIMARY_ADDRESS), 24576000, 0, RPI_GPIO_<26>());
++static RCOutput_PCA9685 rcoutDriver(
++    i2c_mgr_instance.get_device_ptr(
++        utilInstance.detect_linux_board_type() == LINUX_BOARD_TYPE::RPI_5 ? 3 : 4,
++        PCA9685_PRIMARY_ADDRESS),
++    24576000, 0, RPI_GPIO_<26>());
+ #elif AP_RCOUTPUT_ZYNQ_ENABLED
+ static RCOutput_ZYNQ rcoutDriver;
+ #elif CONFIG_HAL_BOARD_SUBTYPE == HAL_BOARD_SUBTYPE_LINUX_BEBOP

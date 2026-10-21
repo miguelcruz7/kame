@@ -7,7 +7,7 @@ Este documento describe el montaje y la configuración **documentados**, no una 
 | Componente | Instalación documentada |
 | --- | --- |
 | Ordenador de a bordo | Raspberry Pi 5 con BlueOS 1.4.3 en la última lectura documentada. |
-| Autopiloto | Blue Robotics Navigator64, ArduRover 4.6.3 en la última lectura. Montaje y orientación detallados debajo. |
+| Autopiloto | Navigator seleccionado como `Navigator64`, **compilación local de ArduRover 4.7.2**, ELF64 AArch64, instalada el 2026-10-20. SHA-256 `5cf0eb0ddc6fafc378862883614948dfc5f90f9e63bf4fd1e8ff5cdd6ca6a537`; selecciona bus 3 para el PWM en Pi 5 y conserva el 4 real de la cámara. Inicialización y neutro comprobados tras instalar, reiniciar ArduPilot y el apagado/encendido posterior realizado por el usuario; ver [reparación y límites](historial/2026-10-20-pwm-pi5-reparacion.md). El binario oficial y 4.6.3 son antecedentes históricos. Montaje y orientación detallados debajo. |
 | GPS | ArduSimple simpleRTK2B Budget, u-blox ZED-F9P, conectado por USB. BlueOS lo asignaba al puerto D/Serial 2; alias `/dev/serial/by-path/platform-xhci-hcd.0-usb-0:2:1.0`, dispositivo `/dev/ttyACM0`. El 2026-10-19 se releyeron `GPS1_TYPE=2` (u-blox) y `SERIAL2_PROTOCOL=5` (GPS); el valor NMEA `GPS1_TYPE=5` fue anterior. Tras un `NO_GPS` temporal después del reinicio, a las ~19:31 CEST había `DGPS` con 15 satélites. |
 | Brújula | Según el usuario el 2026-10-20, MMC5983 desconectada por incompatibilidad con Raspberry Pi 5 en esta instalación; únicamente AK09915 restante, sin errores comunicados. Las ranuras MMC5983/AK09915 del 2026-10-16 corresponden al montaje anterior; no se han releído prioridades ni parámetros actuales. Ver [montaje comunicado](historial/2026-10-20-brujula-mmc5983.md) y [actualización operativa](historial/2026-10-20-estado-operativo.md). |
 
@@ -42,14 +42,14 @@ La red ZeroTier privada tiene Raspberry `10.133.182.55` y PC `10.133.182.131`. S
 
 ## Propulsión y configuración
 
-Se comunicaron un Blue Robotics T200, un ESC Spektrum SPMXME1A de 100 A y batería 4S; falta confirmar modelo de ESC y motor de cada lado. No se ha demostrado que existan sensores de RPM, encoders ni telemetría ESC.
+El 2026-10-20 el usuario confirmó T200 + Basic ESC de Blue Robotics en el lado derecho, asignado a PWM3; al cerrar la prueba supervisada se retiró su cable de control. El conjunto funcionaba con un receptor RC directo según su observación previa. El 2026-10-21 comunicó que «ya funcionan los motores», sin detallar todavía la prueba de cada lado. Antes se comunicaron también un ESC Spektrum SPMXME1A de 100 A y batería 4S, sin identificar completamente el equipo de cada lado. No se ha demostrado que existan sensores de RPM, encoders ni telemetría ESC.
 
-| Lado | Conexión y configuración documentadas el 2026-10-19 | Pendiente |
+| Lado | Conexión y configuración documentadas | Pendiente |
 | --- | --- | --- |
-| Derecho | El usuario confirmó PWM 2; `SERVO2_FUNCTION=74`. | Identificar ESC/motor, alimentación y señal física. |
-| Izquierdo | ArduPilot reporta PWM 1; `SERVO1_FUNCTION=73`. | Confirmar también el cableado real. |
+| Derecho | Actualización del 2026-10-20: PWM3 comunicado por el usuario; `SERVO3_FUNCTION=74` releído. Sustituye la conexión histórica a PWM2. Con el [firmware corregido instalado](historial/2026-10-20-pwm-pi5-reparacion.md), el usuario confirmó dos pitidos adicionales y ningún movimiento en la prueba de neutro. | Documentar por separado las condiciones y respuesta de giro de este lado. Al cierre del ensayo de neutro, control retirado; ArduPilot se leyó desarmado y el chip despierto. |
+| Izquierdo | `SERVO1_FUNCTION=73` releído el 2026-10-20. | Confirmar cableado físico a PWM1, equipos del lado y condiciones del funcionamiento comunicado el 2026-10-21. |
 
-`FRAME_CLASS=2`, PWM normal y neutral de 1500 µs fueron las lecturas documentadas. Las pruebas a 1550 µs se aceptaron sin giro observado; ver [motores/ESC](historial/2026-10-19-motores-esc.md). La telemetría no acredita salida eléctrica ni alimentación del ESC. Los [snapshots del 16 de octubre](historial/parametros/README.md) preceden a estos ajustes.
+Se releyeron `FRAME_CLASS=2`, `FRAME_TYPE=0` y PWM normal el 2026-10-20. La [discordancia original entre los buses 4 y 3](historial/2026-10-20-pwm3-controlador.md) se corrigió con el firmware local: ArduPilot abre ahora `i2c-3`; PWM3 reporta 1500 µs y el chip contiene 306 cuentas, nominalmente unos 1494 µs a 50 Hz. El ESC reconoció ese neutro según el usuario; no se midió la forma de onda con instrumento. Las pruebas históricas a 1550 µs se aceptaron sin giro observado; ver [motores/ESC](historial/2026-10-19-motores-esc.md). La telemetría por sí sola no acredita salida eléctrica ni alimentación del ESC. Los [snapshots del 16 de octubre](historial/parametros/README.md) preceden a estos ajustes.
 
 ## Responsabilidades y orientación de datos
 

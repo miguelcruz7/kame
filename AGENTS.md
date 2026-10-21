@@ -1,83 +1,48 @@
 # Normas de trabajo en Kame
 
-## Orden de lectura
-
-Este documento contiene reglas estables. Tras leerlas, abrir el [README principal](README.md) para conocer el proyecto y seguir su recorrido de [Por dónde empezar](README.md#por-dónde-empezar), sin repetir lecturas ya completadas.
-
-Trabajar sobre el encargo del usuario. El estado y el plan aportan contexto; consultar sus pendientes no autoriza a ejecutarlos todos. Leer las guías y antecedentes que requiera la tarea.
-
-Si durante una tarea se detecta un problema fuera de su alcance, registrarlo como pendiente cuando sea relevante, pero no resolverlo salvo que sea necesario para completar el encargo actual. Una vez completado el encargo, detenerse y no iniciar automáticamente otros pendientes.
+## Alcance y orden de lectura
+1. Leer este documento y abrir el [README principal](README.md) ([Por dónde empezar](README.md#por-dónde-empezar)) sin releer lo ya visto.
+2. Ceñirse al encargo actual y leer las guías que requiera. Consultar `docs/estado.md` o `docs/plan.md` aporta contexto, pero **no autoriza a ejecutar otros pendientes**.
+3. Si surge un problema fuera de alcance, registrarlo como pendiente sin resolverlo (salvo que bloquee el encargo actual). Al terminar el encargo, detenerse.
 
 ## Actuación según el encargo
 
 | Encargo | Qué hacer | Entrega esperada |
 | --- | --- | --- |
-| Pregunta o análisis | Consultar la documentación y el código pertinentes; responder con hechos y límites. | Explicación o informe. La consulta por sí sola no requiere editar archivos, crear rama ni ejecutar pruebas. |
-| Cambio documental | Editar los documentos afectados y comprobar coherencia, enlaces y referencias. | Cambio y comprobaciones registrados; PR cuando deba revisarse, compartirse o integrarse en `main`. |
-| Cambio de código | Leer la guía del componente, implementar y verificar el comportamiento; actualizar su guía si cambia el uso. | Cambio, comprobaciones y límites registrados; PR cuando deba revisarse, compartirse o integrarse en `main`. |
-| Inspección del vehículo | Leer hardware, preparación y guía del subsistema; obtener lecturas actuales de solo lectura. | Síntesis en estado y evidencia detallada en historial cuando corresponda. |
-| Intervención en el vehículo | Confirmar autorización y seguridad, guardar configuración, aplicar lo autorizado y verificar el resultado. | Registro de valores anterior/nuevo, evidencia, estado final y reversión. |
+| **Pregunta o análisis** | Consultar documentación y código pertinentes. No editar archivos, no crear ramas ni correr pruebas. | Explicación o informe con hechos y límites. |
+| **Cambio documental** | Editar documentos afectados; verificar coherencia, enlaces y referencias. | Cambios y comprobaciones registrados. |
+| **Cambio de código** | Leer guía del componente, implementar, verificar y actualizar su guía si cambia el uso. | Cambios, comprobaciones y límites registrados. |
+| **Inspección del vehículo** | Leer `hardware.md`, `preparacion.md` y guía del subsistema; hacer lecturas frescas de solo lectura. | Síntesis en `estado.md` y evidencia en `historial/`. |
+| **Intervención en el vehículo** | Confirmar autorización y seguridad, guardar backup, aplicar cambio y verificar. | Valores anterior/nuevo, evidencia, estado final y reversión. |
 
-Si una inspección o intervención genera cambios en archivos versionados, aplicar también el flujo de Git.
+## Flujo de trabajo y Git
+1. **Preparación:** Definir objetivo, alcance y criterios de aceptación (enlazar issue/PR si existe). Comprobar rama y cambios locales antes de editar para conservar trabajo ajeno.
+2. **Estructura:** Mantener código, configuración y README juntos; no crear carpetas vacías ni duplicar. Separar refactorización organizativa de cambios funcionales (mover archivos locales no altera las rutas instaladas en el barco).
+3. **Control de versiones:** Puedes crear ramas o commits locales para aislar trabajo. **Prohibido hacer `push`, abrir PR o integrar en `main` sin autorización explícita.** Una PR integrada no equivale a código instalado en el barco.
+4. **Cierre:** Revisar `git diff` (alcance, efectos, docs, secretos). Entregar qué cambió, qué se comprobó, qué queda pendiente y distinguir entre *en repositorio*, *instalado* y *verificado en ejecución*. Tras integrar (con permiso), sincronizar `main` local sin borrar trabajo ajeno.
 
-## Flujo de trabajo
+## Comprobaciones y bloqueo
+- **Archivos versionados:** Ejecutar en raíz `python3 .github/checks/check_repository.py` (Python 3.12+, Node 20+, Git; no requiere el barco).
+- **Navegación o SITL:** Ejecutar además `python3 .github/checks/check_sitl.py` en Linux/WSL según su [guía](simulacion/sitl/README.md).
+- **Específicas:** Añadir pruebas si las anteriores no cubren los criterios de aceptación. Las pruebas simuladas no acreditan resultados físicos.
+- **Traspaso de trabajo incompleto:** Si un bloqueo externo impide verificar, no cerrar la tarea. Documentar estado actual, métodos probados, cambios aplicados/revertidos, hipótesis abiertas (nunca presentarlas como hechos), evidencias y siguiente paso. Registrar intervenciones/ensayos en `docs/historial/` (y actualizar `docs/estado.md` si cambia el estado vigente); cambios puramente de software van en su PR/issue.
 
-Los cambios pueden desarrollarse y comprobarse localmente. Usar una rama cuando el trabajo vaya a conservarse, pueda interferir con otro trabajo o haya varios agentes trabajando en paralelo. Crear una PR cuando exista una unidad coherente que deba revisarse, compartirse o integrarse en `main`; no hace falta una PR por cada iteración intermedia.
+## Límites de actuación en el vehículo
+- **Interfaz:** Usar siempre la interfaz de mayor nivel verificable: BlueOS, ArduPilot o MAVLink para configuración/estado; SSH para SO, servicios, archivos y red. No usar bajo nivel para algo gestionado arriba sin razón técnica. Verificar que la interfaz corresponde a la versión instalada.
+- **Seguridad física:** Prohibido cambiar parámetros, firmware o puertos, ni reiniciar, armar o mover motores sin **autorización explícita de la sesión actual** (permisos pasados caducan) y comprobación de seguridad. **Mantener desarmado si hay avisos de brújula o sin GPS válido.**
+- **Ejecución:** Consultar guías de [vídeo](software/video/README.md) y [conectividad](software/conectividad/README.md) antes de tocar esos servicios. Guardar siempre configuración previa y registrar fecha, valores anterior/nuevo, pruebas y plan de reversión.
 
-Para cambios versionados: tarea → cambio → comprobaciones → revisión de las diferencias → resultado registrado; añadir rama, PR e integración cuando corresponda.
-
-1. Definir objetivo, alcance y criterios de aceptación en el encargo, issue o PR; enlazar la tarea existente cuando la haya.
-2. Comprobar rama y cambios locales antes de editar. Usar una rama cuando el trabajo vaya a conservarse, pueda interferir con otro trabajo o haya varios agentes trabajando en paralelo; conservar el trabajo ajeno.
-3. Mantener código, configuración y README juntos; evitar duplicaciones y carpetas para funciones aún no implementadas. Separar cambios de organización y funcionales; un traslado local no cambia las rutas instaladas en el vehículo.
-4. Ejecutar las comprobaciones siguientes y revisar las diferencias. Registrar el resultado; crear PR cuando exista una unidad coherente que deba revisarse, compartirse o integrarse en `main`.
-5. Entregar qué se cambió, qué se comprobó y qué queda pendiente; indicar rama, PR o commit cuando existan. Distinguir lo preparado en el repositorio, lo instalado y lo verificado en ejecución. Tras integrar, sincronizar `main` local sin descartar trabajo ajeno.
-
-## Comprobaciones y cierre
-
-- Para cambios en archivos versionados, ejecutar desde la raíz `python .github/checks/check_repository.py`, con Python 3.12+, Node.js 20+ y Git. No necesita acceso al barco.
-- Para cambios en código de navegación o en el arranque de SITL, ejecutar además `python3 .github/checks/check_sitl.py` en Linux/WSL con los recursos de su [guía](simulacion/sitl/README.md).
-- Añadir comprobaciones del comportamiento modificado cuando las anteriores no cubran sus criterios de aceptación.
-- Registrar comando o ensayo, entorno, resultado y límites. Si falta una dependencia, recurso o acceso, indicar qué comprobación queda pendiente y cómo desbloquearla; continuar el trabajo independiente posible.
-
-Cerrar una tarea solo cuando se cumplan sus criterios y comprobaciones exigidas. Corregir los fallos y repetir las pruebas afectadas. Si un impedimento externo bloquea la verificación, entregar el trabajo como incompleto indicando qué falta; una prueba no ejecutada permanece pendiente. Las pruebas simuladas no acreditan resultados físicos.
-
-**Traspaso de trabajo incompleto.** Si una tarea queda bloqueada, falla o se detiene sin cumplir sus criterios, dejar antes de terminar un registro suficiente para retomarla: estado actual, métodos probados y sus resultados, cambios aplicados o revertidos, conclusiones e hipótesis abiertas, evidencias disponibles y siguiente paso recomendado. El detalle debe registrarse en `docs/historial/` cuando corresponda a una intervención, ensayo o diagnóstico del vehículo o de sus servicios; si cambia el estado vigente o los siguientes pasos, actualizar también `docs/estado.md`. Los cambios puramente de software pueden quedar documentados en la PR o tarea correspondiente. No presentar como hecho una hipótesis no verificada.
-
-## Revisión e integración
-
-El agente revisa sus diferencias: alcance, efectos, documentación, secretos y resultados. Si el encargo reserva la revisión a una persona u otro revisor, mantener la PR pendiente hasta recibirla.
-
-Para documentación y software local dentro del encargo autorizado, el agente puede integrar su PR cuando las comprobaciones exigidas del último commit pasan, se han resuelto los hallazgos y no hay revisión pendiente. Si falta una condición, entregar la PR indicando cuál. Una PR integrada no acredita instalación ni autorización para actuar sobre el vehículo; se aplican los límites siguientes.
-
-## Límites de actuación
-
-**Selección de interfaz.** Para cada tarea, usar la interfaz de mayor nivel que sea suficiente y verificable. Preferir BlueOS/MAVLink para configuración y estado del vehículo, y SSH para sistema operativo, servicios, archivos, procesos y red. No modificar por una vía de bajo nivel algo gestionado por otra interfaz salvo que exista una razón técnica clara. La interfaz usada para diagnóstico no sustituye la evidencia exigida por el criterio de aceptación.
-
-Empezar las inspecciones con consultas de solo lectura y seguir los procedimientos del subsistema. Verificar que la interfaz utilizada corresponde a la versión instalada y que cada lectura es fresca.
-
-No cambiar parámetros, firmware o asignaciones de puerto, ni reiniciar, armar o accionar motores sin autorización explícita y comprobación de seguridad. Mantener el barco desarmado mientras existan avisos de brújula o no se haya validado el GPS. Una autorización histórica no acredita las condiciones físicas de una nueva sesión.
-
-Antes de un cambio autorizado, guardar la configuración vigente; aplicar solo lo acordado, leer el resultado y registrar valores anterior/nuevo, fecha, comprobaciones y reversión. Consultar las guías de [vídeo](software/video/README.md) y [conectividad](software/conectividad/README.md) antes de intervenir en esos servicios.
-
-## Credenciales y recursos privados
-
-Las credenciales operativas se conservan en `local/credenciales.md`, excluido de Git. Leerlas solo cuando una tarea autorizada las necesite y mantenerlas ahí si cambian. No copiarlas a archivos versionados, salida de comandos, issues o PR. Proteger también tokens, claves e identidades de red.
-
-Mantener binarios, modelos, cachés y registros pesados en `local/`. Su procedencia y recuperación están en el [inventario](docs/historial/recursos.json); preservar los archivos únicos durante una limpieza.
+## Credenciales y archivos locales
+- Leer credenciales de `local/credenciales.md` (excluido de Git) solo cuando una tarea autorizada lo requiera. Si el usuario autoriza expresamente una conexión que las necesita, esa autorización permite leerlas y usarlas sin volver a pedirlas; no incluirlas en comandos, respuestas ni registros. Jamás exponer claves, tokens o identidades de red en Git, logs, issues o PRs.
+- Antes de intentar SSH a Kame, consultar el método de autenticación indicado en `local/credenciales.md`. El acceso actual del usuario `pi` usa contraseña; las claves privadas que OpenSSH encuentre en el PC no son credenciales del barco. Para `kame-4g`, usar autenticación por contraseña y evitar `BatchMode=yes`, que impide solicitarla.
+- Guardar binarios, modelos, cachés y logs pesados en `local/`. Consultar el [inventario](docs/historial/recursos.json) para su procedencia y preservar archivos únicos al limpiar.
 
 ## Qué documentación actualizar
-
-| Qué cambia | Dónde registrarlo |
-| --- | --- |
-| Estructura, componentes o comandos de entrada | [README](README.md). |
-| Objetivos, fases o criterios de avance acordados | [Plan](docs/plan.md). |
-| Evidencia vigente, bloqueos, prioridades o siguientes tareas | [Estado](docs/estado.md), con fecha y fuente. |
-| Inventario, cableado, montaje u orientación | [Hardware](docs/hardware.md). |
-| Procedimiento de preparación o ensayo del barco | [Preparación](docs/preparacion.md). |
-| Instalación, operación, verificación o recuperación de un componente | README del componente. |
-| Reglas estables de trabajo | AGENTS. |
-| Resultados detallados, incidencias, decisiones o cambios operativos | Entrada fechada en [historial](docs/historial/README.md). |
-
-Actualizar solo los documentos afectados. Un cambio editorial no constituye una nueva inspección del barco. Distinguir lecturas directas, comunicaciones del usuario e hipótesis; registrar fecha, fuente, enlace cuando exista y límites. Conservar las observaciones históricas con su fecha.
-
-Un ensayo registra ID, objetivo, fecha/zona horaria, fuente y enlace usado, entorno, versión Git y cambios locales, configuración antes/después, autorización aplicable, resultado, evidencias recuperables y estado final/reversión. Los detalles van al historial; los datos crudos privados se conservan bajo un ID común fuera de Git. Los cambios ordinarios de documentación o software pueden quedar registrados en su PR sin añadir una entrada al historial del vehículo.
+Actualizar solo los archivos afectados distinguiendo lecturas directas, dichos del usuario e hipótesis (con fecha, fuente y enlaces):
+- **Estructura o comandos de entrada:** [README](README.md)
+- **Objetivos o fases:** [Plan](docs/plan.md)
+- **Evidencia vigente, bloqueos o siguientes pasos:** [Estado](docs/estado.md)
+- **Inventario, cableado o montaje:** [Hardware](docs/hardware.md)
+- **Procedimiento de preparación/ensayo:** [Preparación](docs/preparacion.md)
+- **Uso o instalación de un módulo:** `README.md` del componente
+- **Ensayos, incidencias o cambios operativos del barco:** Entrada fechada en [historial](docs/historial/README.md) (incluir ID, objetivo, fecha/zona, fuente, entorno, commit/cambios locales, config antes/después, autorización, resultado, evidencias y reversión; datos crudos en `local/` bajo el mismo ID).

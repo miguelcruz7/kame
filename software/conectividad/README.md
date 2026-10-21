@@ -43,18 +43,33 @@ Registrar t0, tiempos de cada hito y de conexión completa, interfaz/ruta observ
 
 Este ensayo valida la cadena completa. El temporizador SIM no demuestra por sí solo el resultado. El [vídeo por 4G](../video/README.md#ensayo-por-4g) se comprueba después como ensayo visual independiente.
 
-## Conexión diaria
+## Conexión diaria por 4G
 
 1. Dar Internet al PC y comprobar que ZeroTier One está ejecutándose. La Pi necesita el módem conectado, SIM lista y cobertura.
 2. Abrir BlueOS en `http://10.133.182.55/`; abrir Cockpit desde el menú de BlueOS.
-3. Para SSH desde el PC configurado, usar `ssh kame-4g`; desde otro equipo autorizado en la misma red, `ssh pi@10.133.182.55`. El alias del PC está en `C:\Users\Miguel\.ssh\config`.
+3. Para SSH desde el PC configurado, usar `ssh kame-4g`; desde otro equipo autorizado en la misma red, `ssh -o PubkeyAuthentication=no -o PreferredAuthentications=password pi@10.133.182.55`. El alias del PC está en `C:\Users\Miguel\.ssh\config` y debe solicitar la contraseña de `pi` guardada en `local/credenciales.md`.
 4. Si se necesita RTSP directo, usar `rtsp://10.133.182.55:8554/cam` para cámara original o `rtsp://10.133.182.55:8556/yolo` para la imagen anotada. BlueOS/Cockpit anunciaban solo YOLO después del ajuste del 2026-10-16.
 
 La red ZeroTier es privada y ambos extremos necesitan Internet. La ruta predeterminada de la Pi debe seguir por el módem `eth1`; no usar ZeroTier como salida general. Al entrar en Cockpit por otra IP, seleccionar el mismo usuario y, si aparece conflicto de ajustes, elegir **Use the value from BlueOS** y recargar. La selección de perfil/vista puede ser local a cada navegador.
 
-Las credenciales están en el archivo privado `local/credenciales.md` de la raíz, excluido de Git. Leer las [reglas de acceso](../../AGENTS.md#credenciales-y-recursos-privados) y comprobar si siguen vigentes antes de usarlas.
+Las credenciales están en el archivo privado `local/credenciales.md` de la raíz, excluido de Git. Leer las [reglas de acceso](../../AGENTS.md#credenciales-y-archivos-locales) y comprobar si siguen vigentes antes de usarlas. En la instalación actual SSH usa **contraseña**, no una clave privada del PC. OpenSSH prueba automáticamente claves de `~/.ssh/` si no se le indica lo contrario; que una de ellas sea rechazada no significa que la contraseña del proyecto haya fallado. Para el alias `kame-4g`, configurar `PubkeyAuthentication no` y `PreferredAuthentications password`. No usar `BatchMode=yes` al conectar manualmente, porque desactiva la petición de contraseña.
+
+## Conexión por Ethernet (SSH)
+
+La interfaz Ethernet de la Raspberry (`eth0`) está documentada con `192.168.2.2/24`; BlueOS se abre en `http://192.168.2.2/`. Para SSH desde Windows, conectar el PC a esa red y ejecutar:
+
+```powershell
+Test-NetConnection 192.168.2.2 -Port 22
+ssh -o PubkeyAuthentication=no -o PreferredAuthentications=password pi@192.168.2.2
+```
+
+En una conexión directa por cable, si Windows no obtiene una dirección de la red, asignar al adaptador Ethernet del PC una dirección libre de `192.168.2.0/24` (máscara `255.255.255.0`). No asignar `192.168.2.2` al PC. Para el enlace directo no hace falta configurar puerta de enlace ni DNS. Si el PC ya tiene una dirección en esa subred por la red a la que está conectado, no hace falta cambiarla.
+
+El usuario SSH documentado es `pi`; la contraseña privada está en `local/credenciales.md`. Consultarla solo según las [reglas de acceso](../../AGENTS.md#credenciales-y-archivos-locales), y no escribirla en el comando ni compartirla. `ssh kame-4g` es el alias para ZeroTier/4G y no apunta a Ethernet.
 
 ## Comprobaciones de solo lectura
+
+Para la salida previa al agua del 2026-10-21, el [ensayo estático conjunto de cinco minutos](../../docs/preparacion.md#ensayo-estático-conjunto-de-cinco-minutos-antes-de-botar) registra 4G, GPS, heartbeat y vídeo observado en Cockpit. El capturador `ensayo_5min.py` admite `simular`, `preflight`, `capture --confirmar-condiciones`, `marca` y `resumen`. Solo `preflight` y `capture` acceden al barco; los datos crudos quedan en `local/registros/F1-4G-SENSORES-20261021-01/`. La comprobación automática no sustituye la observación continua de la pestaña ni el juicio sobre la posición GPS.
 
 En la Raspberry:
 

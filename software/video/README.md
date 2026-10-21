@@ -40,6 +40,38 @@ El entorno Python documentado está en `/home/pi/kame-yolo-offline/venv`; el bin
 
 El acceso directo al RTSP YOLO por cada enlace figura en [hardware e interfaces](../../docs/hardware.md#red-y-puertos). Un GCS que use literalmente la URL anunciada por MAVLink puede requerir sustituir `192.168.2.2` por la IP de su enlace.
 
+## Diagnóstico de IP de vídeo bloqueadas
+
+El aviso **All available video stream IPs are being blocked** indica que la sesión ha encontrado direcciones ICE, pero ninguna coincide con su selección permitida. No equivale a una pérdida de conexión del vehículo. El [diagnóstico separado del 2026-10-20](../../docs/historial/2026-10-20-video-cockpit-4g.md) conserva las fuentes y los límites actuales.
+
+En el [código de Cockpit v1.16.0-beta.1](https://github.com/bluerobotics/cockpit/blob/v1.16.0-beta.1/src/libs/webrtc/session.ts), una lista permitida vacía no filtra por IP. La [rutina del aviso](https://github.com/bluerobotics/cockpit/blob/v1.16.0-beta.1/src/stores/video.ts) se instala si la selección automática está habilitada al inicializar el módulo. La [sincronización de ajustes](https://github.com/bluerobotics/cockpit/blob/v1.16.0-beta.1/src/composables/settingsSyncer.ts) utiliza primero el almacenamiento del navegador y después consulta BlueOS. Por tanto, leer `[]` y selección automática desactivada en BlueOS no demuestra qué valores aplicó una pestaña ya abierta. Comprobar también versión, usuario y conflictos de sincronización antes de atribuir una causa definitiva.
+
+**Resultado del 2026-10-20:** la sesión Edge del usuario tenía seleccionada `192.168.10.2` y selección automática activada, pese a los valores distintos guardados en BlueOS. Se seleccionó `10.133.182.55`, se desactivó la selección automática y se recargó una vez: YOLO apareció a 960×540 y el usuario confirmó reproducción. No se cambió el encoder ni ningún servicio. El usuario solicitó detener la observación y omitir el ensayo de 15 min; los ensayos ampliados siguientes son procedimientos pendientes, no resultados acreditados.
+
+### Aislamiento de un estudio de desconexiones
+
+Trabajar en un worktree y rama propios aísla archivos, pero no los servicios ni los ajustes compartidos del barco. Mientras otro estudio esté activo, limitarse a documentación, código y lecturas de configuración acordadas. No abrir otro reproductor, decodificar RTSP, medir caudal, cambiar usuario/perfiles/ajustes, reiniciar servicios ni alterar red o telemetría. No abrir una pestaña adicional de Cockpit como lectura pasiva: puede iniciar vídeo y sincronizar ajustes automáticamente.
+
+Mantener ID y registros separados para vídeo y conectividad. Los datos de otro estudio pueden consultarse como antecedentes, conservando su origen y hora, sin copiar ni modificar sus archivos. Las pruebas activas requieren una ventana independiente confirmada por el usuario; no se infiere una pausa por el tiempo transcurrido.
+
+### Corrección selectiva en una ventana de vídeo
+
+1. Confirmar fin o pausa del estudio paralelo, barco desarmado y un único consumidor remoto. Identificar versión de Cockpit, navegador, URL, usuario, perfil y vista. La dirección de entrada para 4G es `http://10.133.182.55/extensionv2/cockpit/#/`.
+2. Guardar el estado anterior bajo el ID del ensayo en `local/registros/`: captura de Settings → Video y valores del usuario afectado en BlueOS, incluidos IP permitidas, selección automática, protocolos permitidos y correspondencia de streams. Conservar respaldo completo del usuario de forma privada antes de modificar; los informes públicos solo incluyen los valores de vídeo pertinentes. Comparar los valores efectivos del navegador con BlueOS. No volcar todo el almacenamiento del navegador a un informe.
+3. En **Main menu → Settings → Video**, quitar las IP incompatibles y seleccionar `10.133.182.55` si aparece entre las disponibles. Registrar valores anterior/nuevo. Si no aparece, conservar la evidencia e inspeccionar el anuncio de candidatos; no seleccionar una dirección Ethernet inaccesible ni cambiar el Redirect a ciegas.
+4. Confirmar `Stream 1 → YOLO26n Person + Boat`. Si surge un conflicto de sincronización, comparar el respaldo y elegir el valor de vídeo acordado; no aceptar globalmente ajustes de otros componentes. Recargar una vez y comprobar persistencia. No ejecutar `deploy/configure_cockpit_yolo_only.py`: reescribe perfiles de varios usuarios y puede eliminar otra fuente anunciada.
+5. Verificar por separado desaparición del aviso, conexión ICE/DTLS y frames decodificados de la escena actual. Registrar candidata seleccionada, bytes/frames recibidos y decodificados, pérdidas, pausas y retraso. Si falta imagen, obtener señalización y métricas antes de proponer cambios.
+
+Una respuesta RTSP a DESCRIBE anuncia formato, pero no acredita frames actuales. Una conexión WebSocket aceptada tampoco demuestra negociación completa ni transporte multimedia. Si el aviso desaparece sin imagen: sin pareja ICE, revisar rutas/candidatos; con pareja y sin bytes, revisar pipeline/transporte; con bytes y sin frames decodificados, revisar SDP/H.264/paquetes. Comparar `/cam` y `/yolo` dentro de la Pi durante la ventana acordada para evitar enviar dos vídeos por 4G.
+
+### Validación ampliada y reversión
+
+Mantener inicialmente 960×540/8 FPS. Tras superar el ensayo visual de 60 s, observar **15 min por 4G**, sin errores ni congelaciones superiores a un segundo y sin retraso creciente; medir y registrar el retraso con movimientos conocidos o una referencia temporal visible. Reabrir Cockpit tres veces: primera imagen en un máximo de 15 s y sin repetición del bloqueo. Comprobar después 60 s por Wi-Fi con su dirección accesible, y volver a confirmar la selección para 4G si se modificó.
+
+Solo si hay imagen y las métricas demuestran congestión, preparar un cambio separado a 640×360/8 FPS, objetivo 600 kb/s, máximo 750 kb/s y fotogramas clave cada segundo. El encoder actual fija 1.200.000 bit/s en código: este perfil requiere implementación, respaldo y verificación propios; no existe aún un ajuste de entorno que lo active. No reducir calidad para ocultar un bloqueo de candidatos.
+
+Para revertir, restaurar exclusivamente los valores de vídeo modificados del usuario afectado desde el respaldo inmediato; recargar y leer de nuevo. No restaurar un perfil completo sobre cambios concurrentes ni usar respaldos históricos como si fueran el estado anterior de esta sesión. Registrar corrección, instalación y validación por separado. El estudio del estado conectado/desconectado mantiene su propia causa y criterios.
+
 ## Ensayo por Wi-Fi KAME
 
 Preparar una tarea de ensayo y seguir [preparación](../../docs/preparacion.md). Con el barco desarmado y supervisado, conectar el PC a KAME y abrir BlueOS/Cockpit por `192.168.42.1`. Registrar navegador, perfil, vista, fuente y enlace utilizados.

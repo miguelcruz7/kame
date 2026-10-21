@@ -13,6 +13,18 @@ Las entradas registran lo observado o cambiado en su fecha. La síntesis más re
 | 2026-10-20 | [Reestructuración y verificaciones locales](2026-10-20-reestructuracion.md). |
 | 2026-10-20 | [Comunicación del usuario: MMC5983 desconectada y AK09915 como única brújula](2026-10-20-brujula-mmc5983.md). |
 | 2026-10-20 | [Estado operativo comunicado y ensayos pendientes](2026-10-20-estado-operativo.md). |
+| 2026-10-20 | [Detección USB y ruta del módem Air780EG](2026-10-20-deteccion-air780eg.md). |
+| 2026-10-20 | [Muestra de calidad de la conexión 4G](2026-10-20-calidad-4g.md). |
+| 2026-10-20 | [Ensayo estático 4G: errores RX, RELAY y telemetría antigua en Cockpit](2026-10-20-4g-estatico.md). |
+| 2026-10-20 | [Cockpit: pausas de telemetría por 4G y diagnóstico abierto](2026-10-20-cockpit-4g.md). |
+| 2026-10-20 | [Vídeo Cockpit por 4G: filtro de IP y ventana de validación pendiente](2026-10-20-video-cockpit-4g.md). |
+| 2026-10-20 | [PWM3: fallo de arranque de WebAssistant y recuperación de ArduPilot](2026-10-20-pwm3-webassistant.md). |
+| 2026-10-20 | [PWM3: ArduPilot usa un bus I²C distinto del chip PWM en Pi 5](2026-10-20-pwm3-controlador.md). |
+| 2026-10-20 | [Adecuación del firmware oficial de Kame al barco y Raspberry Pi 5](2026-10-20-firmware-pi5.md). |
+| 2026-10-20 | [PWM3: ensayo de neutro de 10 segundos por el bus físico 3](2026-10-20-pwm3-neutro-bus3.md). |
+| 2026-10-20 | [Repetición de la verificación I²C PWM: bloqueada por ensayo de neutro concurrente](2026-10-20-pwm-i2c-verificacion.md). |
+| 2026-10-20 | [BlueOS: adaptación I²C del PWM omitida por el bus real de la cámara](2026-10-20-blueos-i2c-camara.md). |
+| 2026-10-20 | [Firmware PWM de Pi 5: compilación, instalación, verificación tras encendido y comunicación posterior de motores](2026-10-20-pwm-pi5-reparacion.md). |
 | 2026-10-20 | [Publicación en GitHub y revisión del contenido público](2026-10-20-publicacion-github.md). |
 
 ## Archivos de evidencia

@@ -20,6 +20,7 @@ kame/
 ├── software/
 │   ├── video/               Cámara, YOLO, servicios y diagnóstico
 │   ├── conectividad/        Air780EG y ZeroTier
+│   ├── firmware/            Corrección PWM Navigator64 para Pi 5
 │   └── visor/               Visor de telemetría del Navigator
 ├── simulacion/sitl/         ArduRover simulado y puente MAVLink2REST
 ├── misiones/                Borradores de misión y generador
@@ -35,12 +36,14 @@ Ejecutar desde la raíz:
 | --- | --- | --- |
 | Hardware, puertos y redes | [Hardware](docs/hardware.md) | Consulta documental |
 | BlueOS, firmware y sensores | [Preparación](docs/preparacion.md) | Procedimientos sujetos a autorización |
+| Compilar corrección PWM de Pi 5 | [Firmware](software/firmware/README.md) | `python3 software/firmware/build.py --jobs 8` |
 | Cámara y detección visual | [Vídeo](software/video/README.md) | Servicios instalados en la Pi |
 | Red móvil | [Conectividad](software/conectividad/README.md) | Diagnóstico en su guía |
+| Ensayo estático de 4G, GPS y vídeo | [Preparación](docs/preparacion.md#ensayo-estático-conjunto-de-cinco-minutos-antes-de-botar) | `python software/conectividad/ensayo_5min.py simular` antes de la prueba real |
 | Visor local | [Visor](software/visor/README.md) | `node software/visor/server.mjs` |
 | Simulador Linux/WSL | [SITL](simulacion/sitl/README.md) | `bash simulacion/sitl/start.sh` |
 | Generar misiones | [Misiones](misiones/README.md) | `python misiones/generate_missions.py` |
-| Comprobar sin barco | [Entrega](AGENTS.md#flujo-de-trabajo) | `python .github/checks/check_repository.py` |
+| Comprobar sin barco | [Entrega](AGENTS.md#flujo-de-trabajo-y-git) | `python .github/checks/check_repository.py` |
 
 El visor escucha en `http://127.0.0.1:8765` y consulta BlueOS al ejecutarlo normalmente. Las comprobaciones automáticas usan telemetría simulada. YOLO sigue siendo apoyo visual experimental; no está validado para controlar navegación ni motores.
 
